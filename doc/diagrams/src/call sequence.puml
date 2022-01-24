@@ -1,0 +1,5 @@
+@startuml call_sequence
+user -> ALB: request GET /demo
+ALB -> "Demo pod": request GET /
+"Demo pod" -> user: response JSON body
+@enduml

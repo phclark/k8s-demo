@@ -1,0 +1,24 @@
+@startuml Infrastructure as Code Components
+title Infrastructure as Code Components
+node  "Environment Project" as EnvProject {
+    package "VPC Module" {
+        rectangle VPC
+        collections "Private Subnets" as PrivateSubnets
+        collections "Public Subnets" as PublicSubnets
+        collections "Route Tables" as RouteTables
+        collections NACLs
+        collections "VPC Endpoints" as VPCEndpoints
+    }
+    package "EKS Cluster Module" {
+        rectangle "EKS Cluster" as EKSCluster
+        rectangle ASG
+        rectangle "EKS NodeGroup" as EKSNodeGroup
+        rectangle "CW LogGroup" as CWLogGroup
+        collections "IAM Roles" as IAMRoles
+        collections "Security Groups" as SecurityGroups
+    }
+    collections "ECR Repositories" as ECRRepositories
+    rectangle "Ingress ALB" as IngressALB
+}
+
+@enduml

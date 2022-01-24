@@ -1,0 +1,24 @@
+replicaCount: 1
+image:
+  repository: 767534018423.dkr.ecr.us-east-1.amazonaws.com/demo-api
+  tag: 0.1
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations: 
+    kubernetes.io/ingress.class: alb
+    kubernetes.io/tls-acme: "true"
+  path: /demo
+  hosts:
+    - api.grainfreewoodworks.com
+  tls: []
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
