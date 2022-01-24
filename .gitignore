@@ -32,4 +32,4 @@ override.tf.json
 DEFAULT_PW
 LOCALSTACK_API_KEY
 .DS_Store
-.vs_code/*
+.vscode/*
