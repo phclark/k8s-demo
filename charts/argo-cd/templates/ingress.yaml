@@ -5,7 +5,8 @@ metadata:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/backend-protocol: HTTPS
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
     alb.ingress.kubernetes.io/conditions.argogrpc: |
       [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "Content-Type", "values":["application/grpc"]}}]
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
@@ -34,9 +35,9 @@ spec:
         pathType: ImplementationSpecific
       - backend:
           service:
-            name: argo-cd-argocd-server
+            name: argocd-server
             port: 
-              name: http
+              number: 443
         pathType: ImplementationSpecific
   tls:
   - hosts:

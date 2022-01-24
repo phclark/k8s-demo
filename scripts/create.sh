@@ -43,10 +43,14 @@ aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME
 
 # Install Argo-CD
 echo "Installing Argo-CD"
-helm repo add argo-cd https://argoproj.github.io/argo-helm
-helm dep update charts/argo-cd/
 kubectl create namespace argocd
-helm upgrade -n argocd argo-cd charts/argo-cd/
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -n argocd -f charts/argo-cd/templates/service.yaml
+kubectl apply -n argocd -f charts/argo-cd/templates/ingress.yaml
+# helm repo add argo-cd https://argoproj.github.io/argo-helm
+# helm dep update charts/argo-cd/
+# kubectl create namespace argocd
+# helm upgrade -n argocd argo-cd charts/argo-cd/
 
 # Change default admin password
 python3 -m pip install bcrypt
@@ -59,4 +63,5 @@ kubectl -n argocd patch secret argocd-secret \
   }}'
 
 # Create root Argo-CD App
+argocd login argo.grainfreewoodworks.com --username admin --password $pw
 argocd app create root --repo https://github.com/phclark/k8s-demo.git --path charts/root --dest-server https://kubernetes.default.svc --dest-namespace default
