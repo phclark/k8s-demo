@@ -25,7 +25,7 @@ spec:
         pathType: ImplementationSpecific
       - backend:
           service:
-            name: demoapi
+            name: demo-api
             port: 
               name: http
         pathType: ImplementationSpecific
