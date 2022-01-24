@@ -16,4 +16,4 @@ spec:
   selector:
     app.kubernetes.io/name: argo-cd-argocd-server
   sessionAffinity: None
-  type: NodePort
+  type: ClusterIP
