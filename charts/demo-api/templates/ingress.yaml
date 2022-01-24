@@ -13,7 +13,7 @@ metadata:
   namespace: demo-api
 spec:
   rules:
-  - host: argo.grainfreewoodworks.com
+  - host: api.grainfreewoodworks.com
     http:
       paths:
       - path: /*
