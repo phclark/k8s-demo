@@ -4,9 +4,8 @@ name: terraform-CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,24 +20,24 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-      - name: Start LocalStack
-        env:
-          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
-        run: |
-          # install LocalStack cli 
-          pip install localstack
-          # Make sure to pull the latest version of the image
-          docker pull localstack/localstack
-          # Start LocalStack in the background
-          localstack start -d
-          # Wait 30 seconds for the LocalStack container to become ready before timing out
-          echo "Waiting for LocalStack startup..."
-          localstack wait -t 30
-          echo "Startup complete"
-      - name: Apply Terraform in LocalStack
-        run: |
-          cd terraform
-          ../scripts/symlink.sh
-          cd projects/environment/environments/dev
-          terraform init
-          terraform apply --auto-approve
+      # - name: Start LocalStack
+      #   env:
+      #     LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
+      #   run: |
+      #     # install LocalStack cli 
+      #     pip install localstack
+      #     # Make sure to pull the latest version of the image
+      #     docker pull localstack/localstack
+      #     # Start LocalStack in the background
+      #     localstack start -d
+      #     # Wait 30 seconds for the LocalStack container to become ready before timing out
+      #     echo "Waiting for LocalStack startup..."
+      #     localstack wait -t 30
+      #     echo "Startup complete"
+      # - name: Apply Terraform in LocalStack
+      #   run: |
+      #     cd terraform
+      #     ../scripts/symlink.sh
+      #     cd projects/environment/environments/dev
+      #     terraform init
+      #     terraform apply --auto-approve
