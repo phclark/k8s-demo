@@ -1,6 +1,7 @@
 replicaCount: 1
 image:
-  repository: 767534018423.dkr.ecr.us-east-1.amazonaws.com/demo-api
+  # repository: 767534018423.dkr.ecr.us-east-1.amazonaws.com/demo-api
+  repository: jmalloc/echo-server
   tag: 0.1
   pullPolicy: IfNotPresent
 
