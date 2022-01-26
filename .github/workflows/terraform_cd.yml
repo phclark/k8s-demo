@@ -54,10 +54,10 @@ jobs:
           done
       - name: Perform Terraform plan and run Checkov scan
         run: | 
-        terraform plan -out tf.plan
-        terraform show -json tf.plan | jq '.' > tf.json 
-        checkov -f tf.json
+          terraform plan -out tf.plan
+          terraform show -json tf.plan | jq '.' > tf.json 
+          checkov -f tf.json
       - name: Apply Terraform plan 
         run: |
-        terraform apply tf.plan
+          terraform apply tf.plan
         
