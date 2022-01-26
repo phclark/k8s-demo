@@ -32,7 +32,7 @@ module "eks" {
     ami_type               = "AL2_x86_64"
     disk_size              = 50
     instance_types         = ["t3.medium", "t3.large", "c5.large"]
-    vpc_security_group_ids = [aws_security_group.additional.id]
+    vpc_security_group_ids = []
   }
 
   eks_managed_node_groups = {
@@ -44,9 +44,9 @@ module "eks" {
 
       instance_types = ["t3.medium"]
       capacity_type  = "SPOT"
-      labels = local.tags
+      labels = var.tags
       
-      tags = local.tags
+      tags = var.tags
     }
   }
 }

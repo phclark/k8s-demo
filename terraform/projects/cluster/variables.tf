@@ -21,8 +21,7 @@ variable "kubernetes_version" {
     default = "1.21"
 }
 
-variable "instance_typ" {
-    type = string
-    description = "EC2 Instance type"
-    default = "t4g.medium"
+variable "tags" {
+    description = "Tags to be applied to resources"  
+    default = {}
 }
