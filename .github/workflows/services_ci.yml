@@ -45,19 +45,18 @@ jobs:
           script: |
             import boto3
             import yaml
-
             ecr = boto3.client('ecr')
             response = ecr.describe_repositories()
             repositories = [ r['repositoryName'] for r in response['repositories'] ]
 
-
             with open("services/docker-compose.yml") as f:
               compose = yaml.safe_load(f.read())
-
+              
             for service_name, service_definition in compose['services'].items():
-              image_name = str(service_definition['image']).split('/')[1].split[':'][0]
+              image_name = str(service_definition['image']).split('/')[1].split(':')[0]
               if image_name not in repositories:
                 ecr.create_repository(repositoryName=image_name)
+
       - name: Build images
         run: |
           # Unit tests are performed as part of the Docker build
