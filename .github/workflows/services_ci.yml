@@ -51,7 +51,7 @@ jobs:
             repositories = [ r['repositoryName'] for r in response['repositories'] ]
 
 
-            with open("docker-compose.yml") as f:
+            with open("services/docker-compose.yml") as f:
               compose = yaml.safe_load(f.read())
 
             for service_name, service_definition in compose['services'].items():
@@ -72,12 +72,12 @@ jobs:
             # Iterate through services defined in docker-compose.yml and
             # update chart values tag references to match
             import yaml
-            with open("docker-compose.yml") as f:
+            with open("services/docker-compose.yml") as f:
               compose = yaml.safe_load(f.read())
             for service_name, service_definition in compose['services'].items():
               image = str(service_definition['image']).split('/')[1]
-              with open(f"../charts/{service_name}/values.yaml") as f:
+              with open(f"charts/{service_name}/values.yaml") as f:
                 values = yaml.safe_load(f.read())
               values['image']['tag'] = image.split(':')[1]
-              with open(f"../charts/{service_name}/values.yaml", "w") as f:
+              with open(f"charts/{service_name}/values.yaml", "w") as f:
                 f.write(yaml.dump(values))
