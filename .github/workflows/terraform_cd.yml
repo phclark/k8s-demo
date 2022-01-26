@@ -1,0 +1,63 @@
+# Deploys Terraform configurations on changes
+
+name: terraform_cd
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'terraform'
+
+  workflow_dispatch:
+
+env:
+  environment: dev
+  AWS_REGION: us-east-1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node: 
+          - cluster
+          - k8s_core
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.4
+      - uses: bridgecrewio/checkov-action@master
+        with:
+          quiet: true 
+      - name: Init Cluster project
+        run: |
+          cd terraform
+          ../scripts/symlink.sh
+          cd projects/${{ matrix.node }}/environments/${env.environment}
+          terraform init
+          terraform validate
+      - name: Perform Checkov scan on tf files
+        run: |
+          for file in ./*.tf
+          do
+            echo "Scanning $file"
+            checkov --quiet -f "$file"
+          done
+      - name: Perform Terraform plan and run Checkov scan
+        run: | 
+        terraform plan -out tf.plan
+        terraform show -json tf.plan | jq '.' > tf.json 
+        checkov -f tf.json
+      - name: Apply Terraform plan 
+        run: |
+        terraform apply tf.plan
+        
