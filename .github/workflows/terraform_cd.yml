@@ -1,6 +1,6 @@
 # Deploys Terraform configurations on changes
 
-name: terraform_cd
+name: Terraform CD
 
 on:
   push:

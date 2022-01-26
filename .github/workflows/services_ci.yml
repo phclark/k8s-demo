@@ -1,6 +1,6 @@
 # Builds new Docker images of services and updates helm chart values
 
-name: services_ci
+name: Services CI
 
 on:
   push:
@@ -50,16 +50,14 @@ jobs:
         run: |
           docker-compose push
       - name: Update image tags in charts
-        uses: jannekem/run-python-script-action@v1
+        uses: jannekem/run-python-script-action@v1.2
         with:
           script: |
             # Iterate through services defined in docker-compose.yml and
             # update chart values tag references to match
-
             import yaml
             with open("docker-compose.yml") as f:
               compose = yaml.safe_load(f.read())
-
             for service_name, service_definition in compose['services'].items():
               image = str(service_definition['image']).split('/')[1]
               with open(f"../charts/{service_name}/values.yaml") as f:
