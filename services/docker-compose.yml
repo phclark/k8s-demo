@@ -1,7 +1,7 @@
 version: '2'
 services:
   demo-api:
-    image: ${DOCKER_REGISTRY}/demo-api:0.0.2
+    image: ${DOCKER_REGISTRY}/demo-api:0.0.3
     build:
       context: demo-api
       dockerfile: Dockerfile
