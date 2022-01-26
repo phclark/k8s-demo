@@ -186,7 +186,7 @@ ingress:
   # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
   # ingressClassName: alb
   # Values can be templated
-    annotations: {}
+  annotations: {}
   # annotations: 
   #   kubernetes.io/ingress.class: alb
   #   kubernetes.io/tls-acme: "true"
