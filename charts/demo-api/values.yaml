@@ -16,6 +16,6 @@ nodeSelector: {}
 replicaCount: 1
 resources: {}
 service:
-  port: 80
+  port: 8000
   type: ClusterIP
 tolerations: []
