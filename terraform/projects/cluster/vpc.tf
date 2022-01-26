@@ -12,6 +12,7 @@ module "vpc" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
+  aws_default_security_group = aws_default_security_group.default.id
 
   public_subnet_tags = {
     "kubernetes.io/cluster/${var.environment}-${var.cluster_name}" = "shared"
@@ -23,4 +24,8 @@ module "vpc" {
     "kubernetes.io/role/internal-elb"     = 1
   }
   tags = var.tags
+}
+
+resource "aws_default_security_group" "default" {
+  vpc_id = module.vpc.vpc_id
 }

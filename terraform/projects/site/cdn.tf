@@ -1,4 +1,9 @@
 resource "aws_cloudfront_distribution" "cdn" {
+  #checkov:skip=CKV_AWS_86:Skipped for demo purposes
+  #checkov:skip=CKV_AWS_68:Skipped for demo purposes
+  #checkov:skip=CKV_AWS_174:Skipped for demo purposes
+  #checkov:skip=CKV2_AWS_32:Skipped for demo purposes
+
   origin {
     domain_name = "${aws_s3_bucket.static_website.website_endpoint}"
     origin_path = "${local.public_dir_with_leading_slash}"
@@ -67,6 +72,7 @@ resource "aws_cloudfront_distribution" "cdn" {
 }
 
 resource "aws_cloudfront_distribution" "redirect" {
+  #checkov:skip=CKV2_AWS_32:Skipped for demo purposes
   count = "${length(var.redirects)}"
 
   origin {
