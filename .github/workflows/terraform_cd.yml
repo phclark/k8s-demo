@@ -39,7 +39,7 @@ jobs:
         run: |
           cd terraform
           ../scripts/symlink.sh
-          cd projects/cluster/environments/${env.environment}
+          cd projects/cluster/environments/${{env.environment}}
           terraform init
           terraform validate
           terraform plan -out tf.plan
@@ -48,7 +48,7 @@ jobs:
         run: |
           cd terraform
           ../scripts/symlink.sh
-          cd projects/k8s_core/environments/${env.environment}
+          cd projects/k8s_core/environments/${{env.environment}}
           terraform init
           terraform validate
           terraform plan -out tf.plan
