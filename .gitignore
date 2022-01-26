@@ -33,3 +33,4 @@ DEFAULT_PW
 LOCALSTACK_API_KEY
 .DS_Store
 .vscode/*
+.scannerwork/*
