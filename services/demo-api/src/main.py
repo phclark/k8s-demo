@@ -5,7 +5,7 @@ app = FastAPI()
 
 
 @app.get("/")
-def read_root():
+def demo_endpoint():
     return {
         "message": "Automate all the things!",
         "timestamp": 1529729125
