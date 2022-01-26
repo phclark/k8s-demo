@@ -2,7 +2,7 @@ affinity: {}
 image:
   pullPolicy: IfNotPresent
   repository: 767534018423.dkr.ecr.us-east-1.amazonaws.com/demo-api
-  tag: 0.0.2
+  tag: 0.0.3
 ingress:
   annotations:
     kubernetes.io/ingress.class: alb
