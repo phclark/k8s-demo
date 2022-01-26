@@ -86,3 +86,14 @@ jobs:
               values['image']['tag'] = image.split(':')[1]
               with open(f"charts/{service_name}/values.yaml", "w") as f:
                 f.write(yaml.dump(values))
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add charts
+          git commit -m "Update chart image versions"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
