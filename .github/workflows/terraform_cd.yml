@@ -33,6 +33,8 @@ jobs:
       - uses: bridgecrewio/checkov-action@master
         with:
           quiet: true 
+          directory: terraform/
+          framework: terraform
       - name: Deploy Cluster project
         run: |
           cd terraform
