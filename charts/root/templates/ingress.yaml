@@ -45,7 +45,7 @@ spec:
           service:
             name: loki
             port: 
-              name: http
+              name: http-metrics
         pathType: ImplementationSpecific
   tls:
   - hosts:
