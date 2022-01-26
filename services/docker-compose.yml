@@ -1,0 +1,9 @@
+version: '2'
+services:
+  demo-api:
+    image: ${DOCKER_REGISTRY}/demo-api:0.0.1
+    build:
+      context: demo-api
+      dockerfile: Dockerfile
+    ports: 
+      - 8000
