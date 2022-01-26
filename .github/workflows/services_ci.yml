@@ -4,9 +4,10 @@ name: Services CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
     paths:
-      - 'services'
+      - services
 
 env:
   AWS_REGION: us-east-1

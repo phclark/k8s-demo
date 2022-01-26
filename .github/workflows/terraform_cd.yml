@@ -4,9 +4,10 @@ name: Terraform CD
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
     paths:
-      - 'terraform'
+      - terraform
 
   workflow_dispatch:
 
