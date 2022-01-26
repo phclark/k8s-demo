@@ -453,23 +453,15 @@ plugins: []
 ## Configure grafana datasources
 ## ref: http://docs.grafana.org/administration/provisioning/#datasources
 ##
-datasources: {}
-#  datasources.yaml:
-#    apiVersion: 1
-#    datasources:
-#    - name: Prometheus
-#      type: prometheus
-#      url: http://prometheus-prometheus-server
-#      access: proxy
-#      isDefault: true
-#    - name: CloudWatch
-#      type: cloudwatch
-#      access: proxy
-#      uid: cloudwatch
-#      editable: false
-#      jsonData:
-#        authType: default
-#        defaultRegion: us-east-1
+datasources: 
+ datasources.yaml:
+   apiVersion: 1
+   datasources:
+   - name: Prometheus
+     type: prometheus
+     url: http://prometheus-server.monitoring.svc.cluster.local
+     access: proxy
+     isDefault: true
 
 ## Configure notifiers
 ## ref: http://docs.grafana.org/administration/provisioning/#alert-notification-channels
@@ -513,13 +505,13 @@ dashboardProviders: {}
 ##
 ## dashboards per provider, use provider name as key.
 ##
-dashboards: {}
+dashboards: 
   # default:
   #   some-dashboard:
   #     json: |
   #       $RAW_JSON
-  #   custom-dashboard:
-  #     file: dashboards/custom-dashboard.json
+    custom-dashboard:
+      file: dashboards/api-apm-metrics.json
   #   prometheus-stats:
   #     gnetId: 2
   #     revision: 2
