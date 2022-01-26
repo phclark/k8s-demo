@@ -6,5 +6,7 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    # should fail test 
-    return {"Hello": "World"}
+    return {
+        "message": "Automate all the things!",
+        "timestamp": 1529729125
+    }
