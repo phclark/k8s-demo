@@ -7,7 +7,7 @@ on:
     branches:
       - main
     paths:
-      - services
+      - services/**
 
 env:
   AWS_REGION: us-east-1
