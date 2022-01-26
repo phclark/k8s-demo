@@ -40,7 +40,7 @@ jobs:
             semver==2.13.0
       - name: Create ECRs
         run: |
-          cd docker
+          cd services
           for r in $(grep 'image: \${DOCKER_REGISTRY}' docker-compose.yml | sed -e 's/^.*\///')
           do
             aws ecr create-repository --repository-name "$r"
