@@ -9,6 +9,8 @@ on:
     paths:
       - services/**
 
+  workflow_dispatch:
+
 env:
   AWS_REGION: us-east-1
   DOCKER_REGISTRY: 767534018423.dkr.ecr.us-east-1.amazonaws.com
