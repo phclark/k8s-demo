@@ -29,7 +29,7 @@ spec:
           service:
             name: grafana
             port: 
-              name: http
+              name: service
         pathType: ImplementationSpecific
   - host: loki.grainfreewoodworks.com
     http:
