@@ -77,20 +77,39 @@ jobs:
             # Iterate through services defined in docker-compose.yml and
             # update chart values tag references to match
             import yaml
+            import semver
+
             with open("services/docker-compose.yml") as f:
               compose = yaml.safe_load(f.read())
+
             for service_name, service_definition in compose['services'].items():
+              repository = str(service_definition['image']).split('/')[0]
               image = str(service_definition['image']).split('/')[1]
+
               with open(f"charts/{service_name}/values.yaml") as f:
-                values = yaml.safe_load(f.read())
-              values['image']['tag'] = image.split(':')[1]
+                chart_values = yaml.safe_load(f.read())
+
+              # Bump the patch version and update the docker-compose and chart values
+              
+              version = semver.VersionInfo.parse(image.split(':')[1])
+              version = version.bump_patch()
+
+              compose[service_name]['image'] = f"{repository}/{image.split[':'][0]}{str(version)}"
+              chart_values['image']['tag'] = str(version)
+              
               with open(f"charts/{service_name}/values.yaml", "w") as f:
-                f.write(yaml.dump(values))
+                f.write(yaml.dump(chart_values))
+
+            with open("services/docker-compose.yml") as f:
+              f.write(yaml.dump(compose))
+
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add charts
+          git add services
+          git status
           git commit -m "Update chart image versions"
       - name: Push changes
         uses: ad-m/github-push-action@master
