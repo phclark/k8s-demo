@@ -1,6 +1,7 @@
 resource "kubernetes_secret" "example" {
   metadata {
     name = "grafana-admin-credentials"
+    namespace = "monitoring"
   }
 
   data = {
