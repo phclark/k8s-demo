@@ -506,8 +506,8 @@ dashboardProviders:
 ## dashboards per provider, use provider name as key.
 ##
 dashboards: 
-  api-apm-metrics:
-    file: dashboards/api-apm-metrics.json
+  # api-apm-metrics:
+    # file: dashboards/api-apm-metrics.json
 
   #   prometheus-stats:
   #     gnetId: 2
