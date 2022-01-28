@@ -104,10 +104,6 @@ data:
           },
           "targets": [
             {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "rg5uEhbnz"
-              },
               "exemplar": true,
               "expr": "rate(http_requests_total[5m])",
               "interval": "",
@@ -188,10 +184,6 @@ data:
           },
           "targets": [
             {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "rg5uEhbnz"
-              },
               "exemplar": true,
               "expr": "histogram_quantile(0.90, sum(rate(http_request_duration_seconds_bucket{app=\"demo-api\",handler=\"/\"}[5m])) by (le))",
               "hide": false,
@@ -273,10 +265,6 @@ data:
           },
           "targets": [
             {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "rg5uEhbnz"
-              },
               "exemplar": true,
               "expr": "sum(rate(http_requests_total{app=\"demo-api\"}[5m]))",
               "hide": true,
@@ -285,10 +273,6 @@ data:
               "refId": "Total"
             },
             {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "rg5uEhbnz"
-              },
               "exemplar": true,
               "expr": "rate(http_requests_total{app=\"demo-api\",status=~\"(4xx|5xx)\"}[5m])",
               "hide": true,
