@@ -105,7 +105,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
       - name: Create ECR
         uses: jannekem/run-python-script-action@v1.2
         with:
@@ -130,7 +129,7 @@ jobs:
             repository = compose['services']['${{ matrix.service }}']['image'].split('/')[0]
             image_name = compose['services']['${{ matrix.service }}']['image'].split('/')[1].split(':')[0]
             new_version = "${{ steps.define_version.outputs.new_version }}"
-            compose['services'][service_name]['image'] = f"{repository}/{image_name}:{new_version}"
+            compose['services']['${{ matrix.service }}']['image'] = f"{repository}/{image_name}:{new_version}"
 
             with open("services/docker-compose.yml", "w") as f:
               f.write(yaml.dump(compose))
