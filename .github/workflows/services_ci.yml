@@ -101,9 +101,9 @@ jobs:
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         with:
+          organizaiton: "phclark"
           projectBaseDir: "services/${{ matrix.services }}"
-          projectKey: "${{ matrix.services }}"
-          projectName: "${{ matrix.services }}"
+          projectKey: "phclark_k8s-demo_${{ matrix.services }}"
           projectVersion: "${{ steps.define_version.outputs.new_version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
