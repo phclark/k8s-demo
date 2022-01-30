@@ -27,6 +27,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: VERSION
+              value: "{{ .Values.image.tag }}"
           ports:
             - name: http
               containerPort: 8000
