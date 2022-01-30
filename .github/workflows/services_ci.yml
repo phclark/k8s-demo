@@ -94,7 +94,7 @@ jobs:
           echo "Running unit tests for ${{ matrix.service }}"
           cd services/${{ matrix.service }}
           DOCKER_BUILDKIT=1 docker build --target export-test-results --output type=local,dest=reports .
-          sed -i'.bak' -e 's/\/app\/src/src/g' reports/coverage.xml
+          sed -i'.bak' -e 's/\/app\/src/\/github\/workspace\/services\/demo-api\/src/g' reports/coverage.xml
 
           cat reports/coverage.xml
       - name: SonarCloud Scan
