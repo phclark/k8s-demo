@@ -92,6 +92,8 @@ jobs:
           cd services/${{ matrix.service }}
           docker build --target export-test-results --output type=local,dest=reports .
           sed -i'.bak' -e 's/\/app\/src/src/g' reports/coverage.xml
+        env:
+          DOCKER_BUILDKIT: 1
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
