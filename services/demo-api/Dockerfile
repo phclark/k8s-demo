@@ -11,7 +11,7 @@ FROM build AS test
 RUN pytest --cov=src --cov-report=xml --junitxml=tests.xml tests/
 
 FROM scratch as export-test-results
-COPY --from=test /app/*.xml .
+COPY --from=test /app/*.xml ./
 
 FROM build as publish
 
