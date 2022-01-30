@@ -101,7 +101,7 @@ jobs:
           args: >
             -Dsonar.organization=phclark
             -Dsonar.projectKey="phclark_k8s-demo_${{ matrix.services }}"
-            -Dsonar.projectVersion: "${{ steps.define_version.outputs.new_version }}"
+            -Dsonar.projectVersion="${{ steps.define_version.outputs.new_version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
