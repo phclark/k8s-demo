@@ -34,5 +34,5 @@ LOCALSTACK_API_KEY
 SONAR_TOKEN
 .DS_Store
 .vscode/*
-.scannerwork/*
+**/.scannerwork/*
 node_modules/*
