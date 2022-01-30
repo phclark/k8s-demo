@@ -17,6 +17,7 @@ env:
 
 jobs:
   build_services_json:
+    name: Define Services
     runs-on: ubuntu-latest
     outputs:
       services: ${{ steps.find-services.outputs.services }}
@@ -44,6 +45,7 @@ jobs:
             print(f'::set-output name=services::{json.dumps(service_names)}')
 
   build:
+    name: Build Services
     runs-on: ubuntu-latest
     needs:
       - build_services_json
@@ -90,9 +92,9 @@ jobs:
         run: |
           echo "Running unit tests for ${{ matrix.service }}"
           cd services/${{ matrix.service }}
-          ls -al
-          docker build --target export-test-results --output type=local,dest=reports .
-          sed -i'.bak' -e 's/\/app\/src/src/g' reports/coverage.xml
+          docker build .
+          #docker build --target export-test-results --output type=local,dest=reports .
+          #sed -i'.bak' -e 's/\/app\/src/src/g' reports/coverage.xml
         env:
           DOCKER_BUILDKIT: 1
 
@@ -155,6 +157,7 @@ jobs:
           docker-compose push ${{ matrix.service }}
 
   commit:
+    name: Commit New Versions
     runs-on: ubuntu-latest
     needs:
       - build
