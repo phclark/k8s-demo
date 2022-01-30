@@ -95,12 +95,13 @@ jobs:
           DOCKER_BUILDKIT=1 docker build --target export-test-results --output type=local,dest=reports .
           sed -i'.bak' -e 's/\/app\/src/src/g' reports/coverage.xml
       - name: SonarCloud Scan
-        uses: kitabisa/sonarqube-action@v1.1.0
+        uses: sonarsource/sonarqube-scan-action@master
         with:
-          organizaiton: "phclark"
           projectBaseDir: "services/${{ matrix.services }}"
-          projectKey: "phclark_k8s-demo_${{ matrix.services }}"
-          projectVersion: "${{ steps.define_version.outputs.new_version }}"
+          args: >
+            -Dsonar.organization=phclark
+            -Dsonar.projectKey="phclark_k8s-demo_${{ matrix.services }}"
+            -Dsonar.projectVersion: "${{ steps.define_version.outputs.new_version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
