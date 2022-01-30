@@ -31,6 +31,8 @@ override.tf.json
 
 DEFAULT_PW
 LOCALSTACK_API_KEY
+SONAR_TOKEN
 .DS_Store
 .vscode/*
 .scannerwork/*
+node_modules/*

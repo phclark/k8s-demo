@@ -6,4 +6,3 @@ services:
     image: ${DOCKER_REGISTRY}/demo-api:0.0.4
     ports:
     - 8000:8000
-version: '2'

@@ -1,6 +1,13 @@
 # k8s-demo
 
-Objective: Deploy a REST microservice endpoint to a Kubernetes cluster hosted in AWS. 
+![Python](https://img.shields.io/badge/python-v3.9+-blue.svg)
+[![Services CI](https://github.com/phclark/k8s-demo/actions/workflows/services_ci.yml/badge.svg)](https://github.com/phclark/k8s-demo/actions/workflows/services_ci.yml)
+[![Terraform CD](https://github.com/phclark/k8s-demo/actions/workflows/terraform_cd.yml/badge.svg)](https://github.com/phclark/k8s-demo/actions/workflows/terraform_cd.yml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=phclark_k8s-demo&metric=coverage)](https://sonarcloud.io/summary/new_code?id=phclark_k8s-demo)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+
+This repo is a demonstration of a simple Kubernetes cluster used to serve a basic REST microservice endpoint, hosted AWS. 
 
 This repository deploys the core AWS infrastructure along with the Kubernetes resources required to host the service. 
 
