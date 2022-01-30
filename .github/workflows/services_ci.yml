@@ -84,9 +84,11 @@ jobs:
               compose = yaml.safe_load(f.read())
             image_tag = compose['services']['${{ matrix.service }}']['image'].split('/')[1].split(':')[1]
             new_version = semver.VersionInfo.parse(image_tag).bump_patch()
+            print(f'New version number: {new_version}')
             print(f'::set-output name=new_version::{new_version}')
       - name: Run unit tests
         run: |
+          echo "Running unit tests for ${{ matrix.service }}"
           cd services/${{ matrix.service }}
           docker build --target export-test-results --output type=local,dest=reports .
           sed -i'.bak' -e 's/\/app\/src/src/g' reports/coverage.xml
