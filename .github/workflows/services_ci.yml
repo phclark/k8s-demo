@@ -90,6 +90,7 @@ jobs:
             print(f'::set-output name=new_version::{new_version}')
       - name: Run unit tests
         run: |
+          # TODO: If the image SHA is the same as before, the rest of this job should be skipped
           echo "Running unit tests for ${{ matrix.service }}"
           cd services/${{ matrix.service }}
           DOCKER_BUILDKIT=1 docker build --target export-test-results --output type=local,dest=reports .
@@ -151,13 +152,6 @@ jobs:
         working-directory: services
         run: |
           docker-compose push ${{ matrix.service }}
-
-  commit:
-    name: Commit New Versions
-    runs-on: ubuntu-latest
-    needs:
-      - build
-    steps:
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
