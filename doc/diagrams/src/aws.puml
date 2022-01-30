@@ -1,8 +1,0 @@
-@startuml aws_icons
-!include <awslib/AWSCommon>
-!include <awslib/Compute/all.puml>
-!include <awslib/mobile/all.puml>
-!include <awslib/general/all.puml>
-
-listsprites
-@enduml

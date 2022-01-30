@@ -1,0 +1,8 @@
+@startuml Demo-API Context Diagram
+title Demo-API Context
+rectangle "Customer" #lightblue
+rectangle "Api" #orange
+
+Customer -> Api: "     GET /            "
+Api -> Customer: "JSON response"
+@enduml

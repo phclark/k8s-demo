@@ -1,0 +1,47 @@
+@startuml Pipelines
+rectangle "Code Development" { 
+    actor User
+}
+rectangle "Services CI" as services_ci {
+    rectangle "Sonarqube Scan" as sonarqube_scan
+    rectangle "Create ECRs" as create_ecr
+    rectangle "Build Images" as build_images {
+        rectangle "Unit Tests"
+    }
+    rectangle "Bump Versions" as bump_versions
+    rectangle "Push Images" as push_images
+    rectangle "Update chart tags" as update_chart_tags
+    rectangle "Git Commit" as git_commit
+    rectangle "Git Push Chart Values" as git_push_chart_values
+
+    sonarqube_scan --> create_ecr
+    create_ecr --> build_images
+    build_images --> bump_versions
+    bump_versions --> push_images
+    push_images --> update_chart_tags
+    update_chart_tags --> git_commit
+    git_commit --> git_push_chart_values
+}
+
+rectangle "Terraform CI" as terraform_ci {
+    rectangle "Checkov Scans" as checkov_scans
+    rectangle "Terraform validate & apply cluster" as tf_cluster
+    rectangle "Terraform validate & apply k8s_core" as tf_core
+
+    checkov_scans --> tf_cluster
+    tf_cluster --> tf_core
+}
+
+rectangle "Argo CD" as argocd {
+    rectangle "Update Manifests" as update_manifests
+    rectangle "Sync K8s Resources" as sync_resources
+    update_manifests --> sync_resources
+}
+
+User -> services_ci : Commits to /services
+User -> terraform_ci : Commits to /terraform
+
+git_push_chart_values -> argocd
+
+@enduml
+
