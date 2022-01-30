@@ -36,3 +36,4 @@ SONAR_TOKEN
 .vscode/*
 **/.scannerwork/*
 node_modules/*
+**/reports/*
