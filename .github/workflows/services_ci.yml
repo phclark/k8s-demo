@@ -98,10 +98,10 @@ jobs:
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         with:
-          projectBaseDir: "services/${{ matrix.services }}"
+          projectBaseDir: "services/${{ matrix.service }}"
           args: >
             -Dsonar.organization=phclark
-            -Dsonar.projectKey="phclark_k8s-demo_${{ matrix.services }}"
+            -Dsonar.projectKey="phclark_k8s-demo_${{ matrix.service }}"
             -Dsonar.projectVersion="${{ steps.define_version.outputs.new_version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -134,7 +134,6 @@ jobs:
 
             with open("services/docker-compose.yml", "w") as f:
               f.write(yaml.dump(compose))
-
 
             with open(f"charts/${{ matrix.service }}/values.yaml") as f:
                 chart_values = yaml.safe_load(f.read())
