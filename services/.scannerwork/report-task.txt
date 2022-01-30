@@ -2,6 +2,6 @@ organization=phclark
 projectKey="phclark_k8s-demo_"
 serverUrl=https://sonarcloud.io
 serverVersion=8.0.0.26379
-dashboardUrl=https://sonarcloud.io/dashboard?id=%22phclark_k8s-demo_%22
-ceTaskId=AX6pWbCSc6yHdIzagqU7
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AX6pWbCSc6yHdIzagqU7
+dashboardUrl=https://sonarcloud.io/dashboard?id=%22phclark_k8s-demo_%22&branch=main&resolved=false
+ceTaskId=AX6pXnPHblUfrSbJ2rTI
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AX6pXnPHblUfrSbJ2rTI
