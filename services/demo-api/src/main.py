@@ -15,3 +15,8 @@ def demo_endpoint(response: Response):
         "message": "Automate all the things!",
         "timestamp": 1529729125
     }
+
+@app.get("/healthz")
+def demo_endpoint(response: Response):
+    response.headers["X-VERSION"] = os.environ.get('VERSION', 'default')
+    return "OK"
