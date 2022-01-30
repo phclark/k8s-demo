@@ -41,9 +41,7 @@ jobs:
 
             service_names = list(compose['services'].keys())
             print(f'::set-output name=services::{json.dumps({"service": service_names})}')
-        outputs:
-          services: ${{ steps.find-services.outputs.services }}       
-  
+              
   build:
     runs-on: ubuntu-latest
     needs:
