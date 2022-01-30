@@ -16,8 +16,42 @@ env:
   DOCKER_REGISTRY: 767534018423.dkr.ecr.us-east-1.amazonaws.com
 
 jobs:
+  build_services_json:
+    runs-on: ubuntu-latest
+    outputs:
+			# This needs to match your step's id and name parameters
+      services: ${{ steps.find-services.outputs.services }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup environment
+        run: |
+          export 
+          pip install \
+            pyyaml==6.0 \
+            semver==2.13.0
+      - id: find-services
+        name: Find Services
+        uses: jannekem/run-python-script-action@v1.2
+        with:
+          script: |
+            import yaml
+            import json
+            
+            with open("services/docker-compose.yml") as f:
+              compose = yaml.safe_load(f.read())
+
+            service_names = list(compose['services'].keys())
+            print(f'::set-output name=services::{json.dumps({"service": service_names})}')
+        outputs:
+          services: ${{ steps.find-services.outputs.services }}       
+  
   build:
     runs-on: ubuntu-latest
+    needs:
+      - build_services_json
+    strategy:
+      matrix:
+        service: ${{fromJSON(needs.build_services_json.outputs.services)}}
     steps:
       - uses: actions/checkout@v2
       - name: setup python
@@ -31,11 +65,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Setup environment
         run: |
           export 
@@ -44,60 +73,92 @@ jobs:
             pyyaml==6.0 \
             semver==2.13.0 \
             boto3==1.20.43
-      - name: Create ECRs
+          python3 
+      - id: define_version
+        name: Define version
+        uses: jannekem/run-python-script-action@v1.2
+        with:
+          script: |
+            # Define the new version number
+            import yaml
+            import semver
+            with open("services/docker-compose.yml") as f:
+              compose = yaml.safe_load(f.read())
+            image_tag = compose['services']['${{ matrix.service }}']['image'].split('/')[1].split(':')[1]
+            new_version = semver.VersionInfo.parse(image_tag).bump_patch()
+            print(f'::set-output name=new_version::{new_version}')
+        outputs:
+          new_version: ${{ steps.define_version.outputs.new_version }}
+
+      - name: Run unit tests
+        run: |
+          cd services/${{ matrix.service }}
+          docker build --target export-test-results --output type=local,dest=reports .
+          sed -i'.bak' -e 's/\/app\/src/src/g' reports/coverage.xml
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: "services/${{ matrix.services }}"
+          projectKey: "${{ matrix.services }}"
+          projectName: "${{ matrix.services }}"
+          projectVersion: "${{ jobs.define_version.outputs.new_version }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Create ECR
         uses: jannekem/run-python-script-action@v1.2
         with:
           script: |
             import boto3
-            import yaml
             ecr = boto3.client('ecr')
             response = ecr.describe_repositories()
             repositories = [ r['repositoryName'] for r in response['repositories'] ]
-
-            with open("services/docker-compose.yml") as f:
-              compose = yaml.safe_load(f.read())
-
-            for service_name, service_definition in compose['services'].items():
-              image_name = str(service_definition['image']).split('/')[1].split(':')[0]
-              if image_name not in repositories:
-                ecr.create_repository(repositoryName=image_name)
+            
+            if "${{ matrix.service }}" not in repositories:
+              ecr.create_repository(repositoryName=image_name)
       - name: Update image tags in charts
         uses: jannekem/run-python-script-action@v1.2
         with:
           script: |
-            # Iterate through services defined in docker-compose.yml and
-            # update chart values tag references to match
-            # TODO: this should check in an image has actually changed before bumping the version
+            # Update image tag in docker-compose and root chart values file
             import yaml
             import semver
             with open("services/docker-compose.yml") as f:
               compose = yaml.safe_load(f.read())
 
-            for service_name, service_definition in compose['services'].items():
-              repository = str(service_definition['image']).split('/')[0]
-              image_name = str(service_definition['image']).split('/')[1].split(':')[0]
-              image_tag = str(service_definition['image']).split('/')[1].split(':')[1]
-              with open(f"charts/{service_name}/values.yaml") as f:
-                chart_values = yaml.safe_load(f.read())
-              # Bump the patch version and update the docker-compose and chart values
-              version = semver.VersionInfo.parse(image_tag)
-              new_version = version.bump_patch()
-              compose['services'][service_name]['image'] = f"{repository}/{image_name}:{str(new_version)}"
-              chart_values['image']['tag'] = str(new_version)
-              with open(f"charts/{service_name}/values.yaml", "w") as f:
-                f.write(yaml.dump(chart_values))
+            repository = compose['services']['${{ matrix.service }}']['image'].split('/')[0]
+            image_name = compose['services']['${{ matrix.service }}']['image'].split('/')[1].split(':')[0]
+            new_version = "${{ jobs.define_version.outputs.new_version }}"
+            compose['services'][service_name]['image'] = f"{repository}/{image_name}:{new_version}"
 
             with open("services/docker-compose.yml", "w") as f:
               f.write(yaml.dump(compose))
+
+
+            with open(f"charts/${{ matrix.service }}/values.yaml") as f:
+                chart_values = yaml.safe_load(f.read())
+            
+            chart_values['image']['tag'] = str(new_version)
+
+            with open(f"charts/${{ matrix.service }}/values.yaml", "w") as f:
+              f.write(yaml.dump(chart_values))
       - name: Build images
         working-directory: services
         run: |
           # Unit tests are performed as part of the Docker build
-          docker-compose build
+          docker-compose build ${{ matrix.service }}
       - name: Push images
         working-directory: services
         run: |
-          docker-compose push
+          docker-compose push ${{ matrix.service }}
+
+  commit:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
