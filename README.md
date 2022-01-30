@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/python-v3.9+-blue.svg)
 [![Services CI](https://github.com/phclark/k8s-demo/actions/workflows/services_ci.yml/badge.svg)](https://github.com/phclark/k8s-demo/actions/workflows/services_ci.yml)
 [![Terraform CD](https://github.com/phclark/k8s-demo/actions/workflows/terraform_cd.yml/badge.svg)](https://github.com/phclark/k8s-demo/actions/workflows/terraform_cd.yml)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=phclark_k8s-demo&metric=coverage)](https://sonarcloud.io/summary/new_code?id=phclark_k8s-demo)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=%22phclark_k8s-demo_demo-api%22&metric=coverage)](https://sonarcloud.io/summary/new_code?id=%22phclark_k8s-demo_demo-api%22)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 
