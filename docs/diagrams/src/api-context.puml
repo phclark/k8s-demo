@@ -1,4 +1,4 @@
-@startuml Demo-API Context Diagram
+@startuml api-context
 title Demo-API Context
 rectangle "Customer" #lightblue
 rectangle "Api" #orange

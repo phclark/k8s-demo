@@ -1,4 +1,5 @@
-@startuml call_sequence
+@startuml call-sequence
+title Demo-API Call Sequence
 user -> ALB: request GET /demo
 ALB -> "Demo pod": request GET /
 "Demo pod" -> user: response JSON body

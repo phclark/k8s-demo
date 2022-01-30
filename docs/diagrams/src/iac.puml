@@ -1,4 +1,4 @@
-@startuml Infrastructure as Code Components
+@startuml Infrastructure-as-Code-Components
 title Infrastructure as Code Components
 node  "Environment Project" as EnvProject {
     package "VPC Module" {
