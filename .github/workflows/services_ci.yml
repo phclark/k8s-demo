@@ -96,7 +96,7 @@ jobs:
           projectBaseDir: "services/${{ matrix.services }}"
           projectKey: "${{ matrix.services }}"
           projectName: "${{ matrix.services }}"
-          projectVersion: "${{ jobs.define_version.outputs.new_version }}"
+          projectVersion: "${{ steps.define_version.outputs.new_version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -124,7 +124,7 @@ jobs:
 
             repository = compose['services']['${{ matrix.service }}']['image'].split('/')[0]
             image_name = compose['services']['${{ matrix.service }}']['image'].split('/')[1].split(':')[0]
-            new_version = "${{ jobs.define_version.outputs.new_version }}"
+            new_version = "${{ steps.define_version.outputs.new_version }}"
             compose['services'][service_name]['image'] = f"{repository}/{image_name}:{new_version}"
 
             with open("services/docker-compose.yml", "w") as f:
