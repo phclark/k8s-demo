@@ -41,7 +41,7 @@ jobs:
 
             service_names = list(compose['services'].keys())
             print(f'::set-output name=services::{json.dumps({"service": service_names})}')
-              
+
   build:
     runs-on: ubuntu-latest
     needs:
@@ -84,9 +84,6 @@ jobs:
             image_tag = compose['services']['${{ matrix.service }}']['image'].split('/')[1].split(':')[1]
             new_version = semver.VersionInfo.parse(image_tag).bump_patch()
             print(f'::set-output name=new_version::{new_version}')
-        outputs:
-          new_version: ${{ steps.define_version.outputs.new_version }}
-
       - name: Run unit tests
         run: |
           cd services/${{ matrix.service }}
