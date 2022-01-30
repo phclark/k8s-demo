@@ -41,7 +41,7 @@ jobs:
 
             service_names = list(compose['services'].keys())
             print(f"Found services: {service_names}")
-            print(f'::set-output name=services::{json.dumps({"service": service_names})}')
+            print(f'::set-output name=services::{json.dumps(service_names)}')
 
   build:
     runs-on: ubuntu-latest
