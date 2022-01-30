@@ -23,8 +23,6 @@ cd projects/cluster/environments/$TARGET_ENV
 terraform init
 terraform apply --auto-approve
 
-VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=$CLUSTER_NAME | jq -r '.Vpcs[0].VpcId')
-
 # Install ALB Ingress and External DNS
 cd "${CWD}/terraform/projects/k8s_core/environments/$TARGET_ENV"
 terraform init
@@ -35,8 +33,7 @@ cd $CWD
 # Connect kubectl to cluster
 aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME
 
-
-# Install Helm 
+# Install Helm if required
 # wget https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz
 # tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz
 # mv linux-amd64/helm /usr/local/bin/helm
@@ -47,10 +44,6 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl apply -n argocd -f charts/argo-cd/templates/service.yaml
 kubectl apply -n argocd -f charts/argo-cd/templates/ingress.yaml
-# helm repo add argo-cd https://argoproj.github.io/argo-helm
-# helm dep update charts/argo-cd/
-# kubectl create namespace argocd
-# helm upgrade -n argocd argo-cd charts/argo-cd/
 
 # Change default admin password
 python3 -m pip install bcrypt
