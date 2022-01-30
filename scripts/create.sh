@@ -9,6 +9,7 @@ HELM_VERSION="3.8.0"
 TARGET_ENV="${1:-dev}"
 CLUSTER_NAME="${TARGET_ENV}-demo"
 ACCOUNT_ID=767534018423
+export DOCKER_REGISTRY=767534018423.dkr.ecr.us-east-1.amazonaws.com
 CWD=$(echo $PWD)
 
 ###########################################################
@@ -28,6 +29,12 @@ cd "${CWD}/terraform/projects/k8s_core/environments/$TARGET_ENV"
 terraform init
 terraform apply --auto-approve
 
+cd $CWD
+
+# Build and push services' docker images
+cd services
+docker-compose build
+docker-compose push
 cd $CWD
 
 # Connect kubectl to cluster
