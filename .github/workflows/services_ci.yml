@@ -19,7 +19,6 @@ jobs:
   build_services_json:
     runs-on: ubuntu-latest
     outputs:
-			# This needs to match your step's id and name parameters
       services: ${{ steps.find-services.outputs.services }}
     steps:
       - uses: actions/checkout@v2
