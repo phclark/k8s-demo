@@ -11,6 +11,7 @@ Instrumentator().instrument(app).expose(app)
 @app.get("/")
 def demo_endpoint(response: Response):
     response.headers["X-VERSION"] = os.environ.get('VERSION', 'default')
+    response.headers["X-TEST"] = "foo"
     return {
         "message": "Automate all the things!",
         "timestamp": 1529729125
