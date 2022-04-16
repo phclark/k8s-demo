@@ -1,6 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
+  namespace: default
   name: workflow-template-with-enum-values
 spec:
   entrypoint: argosay

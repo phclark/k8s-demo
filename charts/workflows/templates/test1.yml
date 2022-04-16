@@ -1,6 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
+  namespace: default
   name: workflow-template-submittable-test
 spec:
   entrypoint: whalesay-template     # Fields other than "arguments" and "templates" not supported in v2.4 - v2.6
