@@ -17,7 +17,7 @@ spec:
       inputs:
         parameters:
           - name: message
-            value: '{{workflow.parameters.message}}'
+            value: '{{`{{workflow.parameters.message}}`}}'
       container:
         name: main
         image: 'argoproj/argosay:v2'
@@ -25,4 +25,4 @@ spec:
           - /argosay
         args:
           - echo
-          - '{{inputs.parameters.message}}'
+          - '{{`{{inputs.parameters.message}}`}}'
