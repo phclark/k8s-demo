@@ -8,6 +8,8 @@ server:
   
   ingress:
     enabled: true
+    hosts:
+      - "argocd.grainfreewoodworks.com"
     annotations:
       alb.ingress.kubernetes.io/backend-protocol: HTTPS
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'

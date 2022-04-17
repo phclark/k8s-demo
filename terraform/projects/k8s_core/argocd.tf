@@ -37,8 +37,6 @@ resource "kubernetes_secret" "github_private_key" {
     }
   }
 
-
-
   data = {
     type          = "git"
     url           = "git@github.com:hclark/k8s-demo"
