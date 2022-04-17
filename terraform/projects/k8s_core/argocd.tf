@@ -28,17 +28,16 @@ data "aws_secretsmanager_secret_version" "github_private_key" {
 }
 
 resource "kubernetes_secret" "github_private_key" {
-  name      = "github-private-key"
-  namespace = kubernetes_namespace.argocd.id
-
   metadata {
     name      = "github-private-key"
     namespace = kubernetes_namespace.argocd.id
+
+    labels = {
+      "argocd.argoproj.io/secret-type" = "repository"
+    }
   }
 
-  labels = {
-    "argocd.argoproj.io/secret-type" = "repository"
-  }
+
 
   data = {
     type          = "git"
