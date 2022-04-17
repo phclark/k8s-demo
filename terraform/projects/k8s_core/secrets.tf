@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "monitoring" {
 resource "kubernetes_secret" "grafana_admin_credentials" {
   metadata {
     name      = "grafana-admin-credentials"
-    namespace = kubernetes_namespace.monitoring.name
+    namespace = kubernetes_namespace.monitoring.id
   }
 
   data = {
