@@ -18,26 +18,3 @@ server:
     isAWSALB: true
     awsALB:
       serviceType: ClusterIP
-
-
-argo-cd:
-  installCRDs: false
-  namespace: argocd
-  global:
-    image:
-      tag: v2.2.3
-  dex:
-    enabled: false
-  server:
-    # service:
-      # type: NodePort
-    extraArgs:
-      - --insecure
-    config:
-      repositories: |
-        - type: helm
-          name: stable
-          url: https://charts.helm.sh/stable
-        - type: helm
-          name: argo-cd
-          url: https://argoproj.github.io/argo-helm
