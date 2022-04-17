@@ -37,3 +37,4 @@ SONAR_TOKEN
 **/.scannerwork/*
 node_modules/*
 **/reports/*
+terraform/projects/k8s_core/environments/dev/.terraform.lock.hcl
