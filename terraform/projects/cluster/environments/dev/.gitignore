@@ -1,7 +1,6 @@
 eks.tf
 locals.tf
 main.tf
-misc.tf
 outputs.tf
 variables.auto.tfvars
 variables.tf

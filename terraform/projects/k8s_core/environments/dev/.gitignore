@@ -1,5 +1,7 @@
+argocd.tf
 external-dns.tf
 ingress.tf
 main.tf
+secrets.tf
 variables.tf
 version.tf
