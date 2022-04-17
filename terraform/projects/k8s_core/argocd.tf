@@ -18,11 +18,13 @@ data "aws_secretsmanager_secret" "github_private_key" {
 }
 
 resource "kubernetes_secret" "github_private_key" {
+  name      = "github-private-key"
+  namespace = "argocd"
+
   metadata {
-    name = "github-private-key"
+
   }
 
-  namespace = "argocd"
   labels = {
     "argocd.argoproj.io/secret-type" = "repository"
   }
