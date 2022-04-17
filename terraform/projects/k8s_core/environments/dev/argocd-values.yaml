@@ -2,10 +2,7 @@ global:
   image:
     tag: "v2.2.3"
 
-server:
-  extraArgs:
-    - --insecure
-  
+server:  
   ingress:
     enabled: true
     hosts:
@@ -23,3 +20,5 @@ server:
   ingressGrpc:
     enabled: true
     isAWSALB: true
+    awsALB:
+      serviceType: ClusterIP
