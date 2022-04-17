@@ -14,7 +14,7 @@ resource "helm_release" "argocd" {
   create_namespace = false
 
   values = [
-    templatefile("${path.module}/argocd-values.yaml", {
+    templatefile("${path.root}/argocd-values.yaml", {
     })
   ]
 }
