@@ -23,5 +23,3 @@ server:
   ingressGrpc:
     enabled: true
     isAWSALB: true
-    awsALB:
-      serviceType: ClusterIP
