@@ -1,11 +1,17 @@
+resource "kubernetes_namespace" "argocd" {
+  metadata {
+    name = "argocd"
+  }
+}
+
 resource "helm_release" "argocd" {
   name       = "argocd"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
   version    = "3.31.0"
-  namespace  = "argocd"
+  namespace  = kubernetes_namespace.argocd.id
 
-  create_namespace = true
+  create_namespace = false
 
   values = [
     templatefile("${path.module}/argocd-values.yaml", {
@@ -19,10 +25,11 @@ data "aws_secretsmanager_secret" "github_private_key" {
 
 resource "kubernetes_secret" "github_private_key" {
   name      = "github-private-key"
-  namespace = "argocd"
+  namespace = kubernetes_namespace.argocd.id
 
   metadata {
-
+    name      = "github-private-key"
+    namespace = kubernetes_namespace.argocd.id
   }
 
   labels = {
