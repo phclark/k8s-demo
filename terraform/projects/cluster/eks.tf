@@ -1,5 +1,5 @@
 module "eks" {
-  source = "terraform-aws-modules/eks/aws"
+  source  = "terraform-aws-modules/eks/aws"
   version = "18.2.1"
 
   cluster_name                    = "${var.environment}-${var.cluster_name}"
@@ -8,8 +8,8 @@ module "eks" {
   cluster_endpoint_public_access  = true
 
   vpc_id     = module.vpc.vpc_id
-  subnet_ids =  module.vpc.private_subnets
-  
+  subnet_ids = module.vpc.private_subnets
+
   enable_irsa = true
 
   cluster_addons = {
@@ -44,9 +44,31 @@ module "eks" {
 
       instance_types = ["t3.medium"]
       capacity_type  = "SPOT"
-      labels = var.tags
-      
+      labels         = var.tags
+
       tags = var.tags
+    }
+  }
+
+  node_security_group_additional_rules = {
+    aws_lb_controller_webhook = {
+      description                   = "Cluster API to AWS LB Controller webhook"
+      protocol                      = "all"
+      from_port                     = 9443
+      to_port                       = 9443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+  }
+
+  cluster_security_group_additional_rules = {
+    aws_lb_controller_webhook = {
+      description                = "Cluster API to AWS LB Controller webhook"
+      protocol                   = "all"
+      from_port                  = 9443
+      to_port                    = 9443
+      type                       = "ingress"
+      source_node_security_group = true
     }
   }
 }
