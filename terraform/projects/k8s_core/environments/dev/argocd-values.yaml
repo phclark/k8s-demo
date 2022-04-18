@@ -1,6 +1,3 @@
-apiVersionOverrides:
-  ingress: networking.k8s.io/v1
-  
 server: 
   dex:
     enabled: false
