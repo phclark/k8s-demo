@@ -16,14 +16,6 @@ server:
       external-dns.alpha.kubernetes.io/hostname: argocd.grainfreewoodworks.com
     hosts:
       - "argocd.grainfreewoodworks.com"
-    extraPaths:
-      - path: /*
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: ssl-redirect
-            port: 
-              name: https
     tls:
       - hosts:
         - argo.grainfreewoodworks.com
