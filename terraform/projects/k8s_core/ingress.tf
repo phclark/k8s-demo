@@ -1,6 +1,6 @@
 module "alb_ingress_controller" {
-  source = "./alb-ingress-controller"
-  # aws_load_balancer_controller_chart_version = "1.4.1"
+  source                                     = "./alb-ingress-controller"
+  aws_load_balancer_controller_chart_version = "1.4.1"
 
   k8s_cluster_type = "eks"
   k8s_namespace    = "kube-system"
