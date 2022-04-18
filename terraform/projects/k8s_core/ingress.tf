@@ -1,4 +1,5 @@
 module "alb_ingress_controller" {
+  count                                      = 0
   source                                     = "./alb-ingress-controller"
   aws_load_balancer_controller_chart_version = "1.4.1"
 
