@@ -12,7 +12,7 @@ variable "k8s_cluster_name" {
 variable "k8s_namespace" {
   description = "Kubernetes namespace to deploy the AWS Load Balancer Controller into."
   type        = string
-  default     = "default"
+  default     = "kube-system"
 }
 
 variable "k8s_replicas" {
