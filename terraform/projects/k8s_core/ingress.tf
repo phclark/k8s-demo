@@ -1,7 +1,6 @@
 module "alb_ingress_controller" {
   # source  = "iplabs/alb-ingress-controller/kubernetes"
   # version = "3.4.0"
-  count                                      = 0
   source                                     = "github.com/GSA/terraform-kubernetes-aws-load-balancer-controller.git?ref=v5.0.1"
   aws_load_balancer_controller_chart_version = "1.4.1"
 

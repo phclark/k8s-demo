@@ -18,6 +18,10 @@ resource "helm_release" "argocd" {
     templatefile("${path.root}/argocd-values.yaml", {
     })
   ]
+
+  depends_on = [
+    module.alb_ingress_controller
+  ]
 }
 
 data "aws_secretsmanager_secret" "github_private_key" {
