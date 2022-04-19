@@ -19,12 +19,3 @@ spec:
         image: jshimko/kube-tools-aws:latest
         command: [/bin/bash]
         args: ["{{`{{inputs.parameters.command}}`}}"]  # Argo Workflows templating needs to be escaping from Helm
-      env:
-      - name: MYSECRETPASSWORD  # name of env var
-        valueFrom:
-          secretKeyRef:
-            name: my-secret     # name of an existing k8s secret
-            key: mypassword     # 'key' subcomponent of the secret
-      volumeMounts:
-      - name: my-secret-vol     # mount file containing secret at /secret/mountpath
-        mountPath: "/secret/mountpath"
