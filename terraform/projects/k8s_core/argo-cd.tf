@@ -49,6 +49,12 @@ resource "kubernetes_manifest" "demo-root-app" {
         repoURL        = "https://github.com/phclark/k8s-demo.git"
         targetRevision = "main"
       }
+      syncPolicy = {
+        automated = {
+          prune    = true
+          selfHeal = true
+        }
+      }
     }
   }
   depends_on = [
