@@ -8,6 +8,9 @@ spec:
   templates:
     - name: awscli
       serviceAccountName: argo-workflows-actions
-      container:
+      script:
         image: jshimko/kube-tools-aws:latest
-        command: ["aws","s3","ls"]
+        command: [/bin/bash]
+        source: |
+          aws s3 ls
+          kubectl get namespaces
