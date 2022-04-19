@@ -7,16 +7,8 @@ spec:
     serviceAccountName: argo-workflows-actions
   entrypoint: awscli
   arguments:
-    parameters:
-      - name: command
-        value: aws s3 ls
   templates:
     - name: awscli
-      inputs:
-        parameters:
-          - name: command
       container:
         image: jshimko/kube-tools-aws:latest
-        command: ["aws", "s3", "ls"]
-        # args: {{ split " " `{{inputs.parameters.command}}` }}
-        
+        command: ["cat","/var/run/secrets/kubernetes.io/serviceaccount"]
