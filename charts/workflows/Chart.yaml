@@ -1,6 +1,6 @@
 apiVersion: v2
-name: demo-api
-description: Simple API Demo
+name: workflows
+description: Argo Workflows templates
 type: application
 version: 0.1.0
 appVersion: "1.0"
