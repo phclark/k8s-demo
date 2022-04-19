@@ -18,6 +18,8 @@ provider "helm" {
 
 data "aws_region" "current" {}
 
+data "aws_caller_identity" "current" {}
+
 data "aws_eks_cluster" "target" {
   name = data.terraform_remote_state.cluster.outputs.cluster_name
 }
