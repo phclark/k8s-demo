@@ -84,3 +84,34 @@ resource "aws_iam_role_policy_attachment" "workflows" {
   policy_arn = aws_iam_policy.workflows.arn
   role       = aws_iam_role.workflows.name
 }
+
+resource "kubernetes_cluster_role" "workflows" {
+  metadata {
+    name      = local.service_account_name
+    namespace = kubernetes_namespace.argo-workflows.id
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["*"]
+    verbs      = ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
+  }
+
+}
+
+resource "kubernetes_cluster_role_binding" "workflows" {
+  metadata {
+    name      = local.service_account_name
+    namespace = kubernetes_namespace.argo-workflows.id
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = local.service_account_name
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = local.service_account_name
+    namespace = kubernetes_namespace.argo-workflows.id
+  }
+}
