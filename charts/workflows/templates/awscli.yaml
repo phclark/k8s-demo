@@ -11,4 +11,4 @@ spec:
     - name: awscli
       container:
         image: jshimko/kube-tools-aws:latest
-        command: ["cat","/var/run/secrets/kubernetes.io/serviceaccount"]
+        command: ["ls","-al","/var/run/secrets/kubernetes.io/serviceaccount"]
