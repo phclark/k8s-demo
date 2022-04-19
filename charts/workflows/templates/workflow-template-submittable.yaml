@@ -3,7 +3,7 @@ kind: WorkflowTemplate
 metadata:
   name: workflow-template-submittable
 spec:
-  entrypoint: whalesay-template     # Fields other than "arguments" and "templates" not supported in v2.4 - v2.6
+  entrypoint: whalesay-template
   arguments:
     parameters:
       - name: message
@@ -16,4 +16,4 @@ spec:
       container:
         image: docker/whalesay
         command: [cowsay]
-        args: ["{{inputs.parameters.message}}"]
+        args: ["{{` {{inputs.parameters.message}}` }}"]  # Argo Workflows templating needs to be escaping from Helm
