@@ -17,6 +17,6 @@ spec:
           - name: command
       container:
         image: jshimko/kube-tools-aws:latest
-        command: [/bin/bash]
-        args: {{ split " " `{{inputs.parameters.command}}` }}
+        command: ["aws", "s3", "ls"]
+        # args: {{ split " " `{{inputs.parameters.command}}` }}
         
