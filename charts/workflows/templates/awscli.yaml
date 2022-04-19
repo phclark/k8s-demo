@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: awscli
+spec:
+  entrypoint: awscli
+  arguments:
+    parameters:
+      - name: command
+        value: s3 ls
+  templates:
+    - name: awscli
+      inputs:
+        parameters:
+          - name: command
+      container:
+        image: amazon/aws-cli
+        command: [awscli]
+        args: ["{{` {{inputs.parameters.command}}` }}"]  # Argo Workflows templating needs to be escaping from Helm
