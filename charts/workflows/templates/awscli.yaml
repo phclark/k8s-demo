@@ -3,6 +3,8 @@ kind: WorkflowTemplate
 metadata:
   name: awscli
 spec:
+  executor:
+    serviceAccountName: argo-workflows-actions
   entrypoint: awscli
   arguments:
     parameters:
