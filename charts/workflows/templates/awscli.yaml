@@ -18,4 +18,5 @@ spec:
       container:
         image: jshimko/kube-tools-aws:latest
         command: [/bin/bash]
-        args: ["{{`{{inputs.parameters.command}}`}}"]  # Argo Workflows templating needs to be escaping from Helm
+        args: {{ split " " `{{inputs.parameters.command}}` }}
+        
