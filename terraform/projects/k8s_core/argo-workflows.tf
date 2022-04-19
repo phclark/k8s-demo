@@ -45,42 +45,42 @@ resource "kubernetes_service_account" "workflows" {
   }
 }
 
-resource "aws_iam_role" "this" {
+resource "aws_iam_role" "workflows" {
   name                  = local.service_account_name
   description           = "Permissions required by the Kubernetes Argo Workflows"
   path                  = "/"
   force_detach_policies = true
-  assume_role_policy    = data.aws_iam_policy_document.eks_oidc_assume_role.json
+  assume_role_policy    = data.aws_iam_policy_document.workflows_eks_oidc_assume_role.json
 }
 
-data "aws_iam_policy_document" "eks_oidc_assume_role" {
+data "aws_iam_policy_document" "workflows_eks_oidc_assume_role" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     effect  = "Allow"
     condition {
       test     = "StringEquals"
-      variable = "${replace(data.aws_eks_cluster.target[0].identity[0].oidc[0].issuer, "https://", "")}:sub"
+      variable = "${replace(data.aws_eks_cluster.target.identity[0].oidc[0].issuer, "https://", "")}:sub"
       values = [
         "system:serviceaccount:${kubernetes_namespace.argo-workflows.id}:${local.service_account_name}"
       ]
     }
     principals {
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(data.aws_eks_cluster.target[0].identity[0].oidc[0].issuer, "https://", "")}"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(data.aws_eks_cluster.target.identity[0].oidc[0].issuer, "https://", "")}"
       ]
       type = "Federated"
     }
   }
 }
 
-resource "aws_iam_policy" "this" {
+resource "aws_iam_policy" "workflows" {
   name        = local.service_account_name
   description = "Permissions that are required by Argo Workflows"
   path        = "/"
   policy      = file("${path.root}/argo-workflows-iam_policy.json")
 }
 
-resource "aws_iam_role_policy_attachment" "this" {
-  policy_arn = aws_iam_policy.this.arn
-  role       = aws_iam_role.this.name
+resource "aws_iam_role_policy_attachment" "workflows" {
+  policy_arn = aws_iam_policy.workflows.arn
+  role       = aws_iam_role.workflows.name
 }
