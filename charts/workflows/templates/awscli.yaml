@@ -3,12 +3,11 @@ kind: WorkflowTemplate
 metadata:
   name: awscli
 spec:
-  executor:
-    serviceAccountName: argo-workflows-actions
   entrypoint: awscli
   arguments:
   templates:
     - name: awscli
+      serviceAccountName: argo-workflows-actions
       container:
         image: jshimko/kube-tools-aws:latest
-        command: ["ls","-al","/var/run/secrets/kubernetes.io/serviceaccount"]
+        command: ["aws","s3","ls"]
