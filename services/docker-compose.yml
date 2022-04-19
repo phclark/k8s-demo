@@ -3,6 +3,6 @@ services:
     build:
       context: demo-api
       dockerfile: Dockerfile
-    image: ${DOCKER_REGISTRY}/demo-api:0.0.13
+    image: ${DOCKER_REGISTRY}/demo-api:0.0.14
     ports:
     - 8000:8000
