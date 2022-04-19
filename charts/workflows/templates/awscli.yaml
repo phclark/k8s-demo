@@ -16,4 +16,4 @@ spec:
       container:
         image: amazon/aws-cli
         command: [aws]
-        args: "{{`{{inputs.parameters.command}}`}}"  # Argo Workflows templating needs to be escaping from Helm
+        args: ["{{`{{inputs.parameters.command.split(' ')}}`}}"]  # Argo Workflows templating needs to be escaping from Helm
