@@ -86,15 +86,17 @@ resource "aws_iam_role_policy_attachment" "workflows" {
 }
 
 resource "kubernetes_cluster_role" "workflows" {
+  #checkov:skip=CKV_K8S_49:For demo only!!
+
   metadata {
     name      = local.service_account_name
     namespace = kubernetes_namespace.argo-workflows.id
   }
 
   rule {
-    api_groups = [""]
+    api_groups = ["*"]
     resources  = ["*"]
-    verbs      = ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
+    verbs      = ["*"]
   }
 
 }
