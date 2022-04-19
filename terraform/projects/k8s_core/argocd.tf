@@ -5,8 +5,7 @@ resource "kubernetes_namespace" "argocd" {
 }
 
 resource "helm_release" "argocd" {
-  count      = 0
-  name       = "argocd"
+  name       = "argo-cd"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
   version    = "4.5.3"
@@ -24,27 +23,32 @@ resource "helm_release" "argocd" {
   ]
 }
 
-data "aws_secretsmanager_secret" "github_private_key" {
-  name = "github-private-key"
-}
-
-data "aws_secretsmanager_secret_version" "github_private_key" {
-  secret_id = data.aws_secretsmanager_secret.github_private_key.id
-}
-
-resource "kubernetes_secret" "github_private_key" {
+resource "kubernetes_namespace" "demo" {
   metadata {
-    name      = "github-private-key"
-    namespace = kubernetes_namespace.argocd.id
-
-    labels = {
-      "argocd.argoproj.io/secret-type" = "repository"
-    }
+    name = "demo"
   }
+}
 
-  data = {
-    type          = "git"
-    url           = "git@github.com:hclark/k8s-demo"
-    sshPrivateKey = data.aws_secretsmanager_secret_version.github_private_key.secret_string
+resource "kubernetes_manifest" "demo-root-app" {
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+
+    metadata = {
+      name      = "demo"
+      namespace = kubernetes_namespace.argocd.id
+    }
+
+    spec = {
+      destination = {
+        server = "https://kubernetes.default.svc"
+      }
+      project = "default"
+      source = {
+        path           = "charts/root"
+        repoURL        = "https://github.com/phclark/k8s-demo.git"
+        targetRevision = "main"
+      }
+    }
   }
 }

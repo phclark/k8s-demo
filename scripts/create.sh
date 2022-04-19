@@ -54,7 +54,7 @@ kubectl apply -n argocd -f charts/argo-cd/templates/ingress.yaml
 
 # Change default admin password
 python3 -m pip install bcrypt
-pw=$(aws ssm get-parameter --name /argocd/admin/password --with-decryption | jq -r '.Parameter.Value') 
+pw=$(aws ssm get-parameter --region us-east-1 --name /argocd/admin/password --with-decryption | jq -r '.Parameter.Value') 
 bcrypt_pw=$(python3 -c 'import bcrypt; print(bcrypt.hashpw(b"'$pw'", bcrypt.gensalt(rounds=15)).decode("ascii"))')
 kubectl -n argocd patch secret argocd-secret \
   -p '{"stringData": {
