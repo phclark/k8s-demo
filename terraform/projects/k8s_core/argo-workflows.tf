@@ -89,8 +89,7 @@ resource "kubernetes_cluster_role" "workflows" {
   #checkov:skip=CKV_K8S_49:For demo only!!
 
   metadata {
-    name      = local.service_account_name
-    namespace = kubernetes_namespace.argo-workflows.id
+    name = local.service_account_name
   }
 
   rule {
@@ -103,8 +102,7 @@ resource "kubernetes_cluster_role" "workflows" {
 
 resource "kubernetes_cluster_role_binding" "workflows" {
   metadata {
-    name      = local.service_account_name
-    namespace = kubernetes_namespace.argo-workflows.id
+    name = local.service_account_name
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
