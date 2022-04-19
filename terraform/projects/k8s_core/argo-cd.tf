@@ -51,4 +51,7 @@ resource "kubernetes_manifest" "demo-root-app" {
       }
     }
   }
+  depends_on = [
+    helm_release.argocd
+  ]
 }

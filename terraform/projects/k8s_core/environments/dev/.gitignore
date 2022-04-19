@@ -1,4 +1,5 @@
-argocd.tf
+argo-cd.tf
+argo-workflows.tf
 external-dns.tf
 ingress.tf
 main.tf
