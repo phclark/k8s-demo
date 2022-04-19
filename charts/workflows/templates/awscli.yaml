@@ -9,7 +9,7 @@ spec:
   arguments:
     parameters:
       - name: command
-        value: s3 ls
+        value: aws s3 ls
   templates:
     - name: awscli
       inputs:
@@ -18,7 +18,7 @@ spec:
       container:
         image: jshimko/kube-tools-aws:latest
         command: [/bin/bash]
-        args: ["{{`{{inputs.parameters.command.split(' ')}}`}}"]  # Argo Workflows templating needs to be escaping from Helm
+        args: ["{{`{{inputs.parameters.command}}`}}"]  # Argo Workflows templating needs to be escaping from Helm
       env:
       - name: MYSECRETPASSWORD  # name of env var
         valueFrom:
