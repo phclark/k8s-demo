@@ -31,11 +31,11 @@ resource "kubernetes_namespace" "demo" {
 
 
 resource "helm_release" "root-app" {
-  name = "platform"
+  name  = "platform"
   chart = "../../../../../charts/platform"
 
   values = [
-    templatefile("../../../../../environments/${local.environment}/platform.yml", {
+    templatefile("../../../../../environments/${var.environment}/platform.yml", {
     })
   ]
 }
