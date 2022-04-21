@@ -29,35 +29,46 @@ resource "kubernetes_namespace" "demo" {
   }
 }
 
-resource "kubernetes_manifest" "root-app" {
-  manifest = {
-    apiVersion = "argoproj.io/v1alpha1"
-    kind       = "Application"
 
-    metadata = {
-      name      = "platform"
-      namespace = kubernetes_namespace.argocd.id
-    }
+resource "helm_release" "root-app" {
+  name = "platform"
+  chart = "../../../../../charts/platform"
 
-    spec = {
-      destination = {
-        server = "https://kubernetes.default.svc"
-      }
-      project = "default"
-      source = {
-        path           = "charts/platform"
-        repoURL        = "https://github.com/phclark/k8s-demo.git"
-        targetRevision = "main"
-      }
-      syncPolicy = {
-        automated = {
-          prune    = true
-          selfHeal = true
-        }
-      }
-    }
-  }
-  depends_on = [
-    helm_release.argocd
+  values = [
+    templatefile("../../../../../environments/${local.environment}/platform.yml", {
+    })
   ]
 }
+
+# resource "kubernetes_manifest" "root-app" {
+#   manifest = {
+#     apiVersion = "argoproj.io/v1alpha1"
+#     kind       = "Application"
+
+#     metadata = {
+#       name      = "platform"
+#       namespace = kubernetes_namespace.argocd.id
+#     }
+
+#     spec = {
+#       destination = {
+#         server = "https://kubernetes.default.svc"
+#       }
+#       project = "default"
+#       source = {
+#         path           = "charts/platform"
+#         repoURL        = "https://github.com/phclark/k8s-demo.git"
+#         targetRevision = "main"
+#       }
+#       syncPolicy = {
+#         automated = {
+#           prune    = true
+#           selfHeal = true
+#         }
+#       }
+#     }
+#   }
+#   depends_on = [
+#     helm_release.argocd
+#   ]
+# }
