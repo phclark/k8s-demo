@@ -1,0 +1,36 @@
+{{- range .Values.services }}
+{{- $rangeItem := . -}}
+{{- with $ }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ if $rangeItem.nameOverride }} {{ $rangeItem.nameOverride }} {{else}}{{ $rangeItem.chart }} {{end}}
+  namespace: {{ $rangeItem.namespace }}
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision}}
+    path: charts/{{ $rangeItem.chart }}
+    
+    {{- if $rangeItem.valueFiles }}
+    helm:
+      valueFiles: 
+        {{- range $rangeItem.valueFiles }}
+        - {{ . }}
+        {{- end }}
+    {{- end }}
+    {{- if $rangeItem.values }}
+    helm:
+      values: |
+        # Values
+{{- range $key, $value := $rangeItem.values }}
+{{ indent 8 $key }}: 
+  {{ indent 8 (toYaml $value) }}
+{{- end }}
+    {{- end }}  
+---
+{{- end }}
+{{- end }}

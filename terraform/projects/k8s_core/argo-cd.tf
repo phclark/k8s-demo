@@ -29,13 +29,13 @@ resource "kubernetes_namespace" "demo" {
   }
 }
 
-resource "kubernetes_manifest" "demo-root-app" {
+resource "kubernetes_manifest" "root-app" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
 
     metadata = {
-      name      = "demo"
+      name      = "platform"
       namespace = kubernetes_namespace.argocd.id
     }
 
@@ -45,7 +45,7 @@ resource "kubernetes_manifest" "demo-root-app" {
       }
       project = "default"
       source = {
-        path           = "charts/root"
+        path           = "charts/platform"
         repoURL        = "https://github.com/phclark/k8s-demo.git"
         targetRevision = "main"
       }

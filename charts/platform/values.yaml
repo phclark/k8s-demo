@@ -1,0 +1,21 @@
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/phclark/k8s-demo.git
+    targetRevision: HEAD
+    path: charts/platform
+syncPolicy:
+    automated: {}
+
+# predefined services can be enabled and configured easily
+monitoring:
+  grafana:
+    enabled: false
+  loki:
+    enabled: false
+  prometheus: 
+    enabled: false
+
+services: []
+      
