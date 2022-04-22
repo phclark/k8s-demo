@@ -1,5 +1,5 @@
 {{ if .Values.monitoring.grafana.enabled }}
-\apiVersion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: grafana
@@ -9,12 +9,12 @@ metadata:
 spec:
   destination:
     namespace: monitoring
-    server: {{ .Values.spec.destination.server }}
-  project: default
+    server: {{ .Values.destination.server }}
+  project: {{ .Values.project }}
   source:
     path: charts/grafana
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    repoURL: {{ .Values.source.repoURL }}
+    targetRevision: {{ .Values.source.targetRevision }}
   syncPolicy:
     automated: {}
 {{ end }}

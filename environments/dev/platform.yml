@@ -1,17 +1,16 @@
 environment: dev
 
-# namespaces:
-#   - monitoring
-#   - demo-api
+namespaces:
+  - api
 
 # predefined services can be enabled and configured easily
-# monitoring:
-#   grafana:
-#     enabled: true
-#   loki:
-#     enabled: true
-#   prometheus: 
-#     enabled: true
+monitoring:
+  grafana:
+    enabled: true
+  loki:
+    enabled: true
+  prometheus: 
+    enabled: true
 
 # Services list allows arbitrary charts to be deployed and configured
 services:

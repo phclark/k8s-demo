@@ -7,12 +7,12 @@ metadata:
   name: {{ if $rangeItem.nameOverride }} {{ $rangeItem.nameOverride }} {{else}}{{ $rangeItem.chart }} {{end}}
   namespace: {{ $rangeItem.namespace }}
 spec:
-  project: default
+  project: {{ .Values.project }}
   destination:
     server: https://kubernetes.default.svc
   source:
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision}}
+    repoURL: {{ .Values.source.repoURL }}
+    targetRevision: {{ .Values.source.targetRevision}}
     path: charts/{{ $rangeItem.chart }}
     
     {{- if $rangeItem.valueFiles }}

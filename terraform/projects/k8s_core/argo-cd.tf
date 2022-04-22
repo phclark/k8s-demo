@@ -23,13 +23,6 @@ resource "helm_release" "argocd" {
   ]
 }
 
-resource "kubernetes_namespace" "demo" {
-  metadata {
-    name = "demo"
-  }
-}
-
-
 resource "helm_release" "root-app" {
   name  = "platform"
   chart = "../../../../../charts/platform"
