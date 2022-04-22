@@ -12,5 +12,8 @@ spec:
     repoURL: https://github.com/phclark/k8s-demo.git
     path: charts/platform
     targetRevision: main
+    helm:
+      valueFiles:
+      - ../../../../../environments/dev/values.yml
 syncPolicy:
     automated: {}
