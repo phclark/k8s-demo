@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: application
+name: platform
+version: 0.0.1
+appVersion: 0.0.1
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/phclark/k8s-demo.git
+    path: charts/platform
+    targetRevision: main
+syncPolicy:
+    automated: {}
