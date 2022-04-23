@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "demo-api.fullname" . }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ template "demo-api.name" . }}
     chart: {{ template "demo-api.chart" . }}

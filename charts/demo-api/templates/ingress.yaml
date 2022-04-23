@@ -9,12 +9,12 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
-    external-dns.alpha.kubernetes.io/hostname: api.grainfreewoodworks.com
+    external-dns.alpha.kubernetes.io/hostname: {{ .Values.ingress.hostname }}
   name: ingress
-  namespace: demo-api
+  namespace: {{ .Values.namespace }}
 spec:
   rules:
-  - host: api.grainfreewoodworks.com
+  - host: {{ .Values.ingress.hostname }}
     http:
       paths:
       - path: /*
@@ -31,5 +31,4 @@ spec:
               name: http
         pathType: ImplementationSpecific
   tls:
-  - hosts:
-    - api.grainfreewoodworks.com
+  - hosts: {{ .Values.ingress.hostname }}
