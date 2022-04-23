@@ -16,7 +16,7 @@ spec:
     targetRevision: main
     helm:
       valueFiles:
-      - environments/dev/values.yml
+      - ../../environments/dev/values.yml # relative to charts/platform
   syncPolicy:
       automated:  
         prune: true
