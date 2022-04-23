@@ -13,6 +13,7 @@ spec:
   project: {{ .Values.project }}
   source:
     chart: elastic/eck-operator
+    repoURL: https://helm.elastic.co
     targetRevision: 2.1.0
   syncPolicy:
     automated: {}
