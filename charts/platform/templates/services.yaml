@@ -5,7 +5,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: {{ if $rangeItem.nameOverride }} {{ $rangeItem.nameOverride }} {{else}}{{ $rangeItem.chart }} {{end}}
-  namespace: {{ $rangeItem.namespace }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: {{ .Values.project }}
   destination:
