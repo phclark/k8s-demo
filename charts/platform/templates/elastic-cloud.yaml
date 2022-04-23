@@ -1,0 +1,19 @@
+{{ if .Values.elastic-cloud.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elastic-cloud
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: elastic-system
+    server: {{ .Values.destination.server }}
+  project: {{ .Values.project }}
+  source:
+    repoURL: elastic-operator
+    targetRevision: 2.1.0
+  syncPolicy:
+    automated: {}
+{{ end }}
