@@ -12,7 +12,7 @@ spec:
     server: {{ .Values.destination.server }}
   project: {{ .Values.project }}
   source:
-    chart: elastic/eck-operator
+    chart: eck-operator
     repoURL: https://helm.elastic.co
     targetRevision: 2.1.0
   syncPolicy:
