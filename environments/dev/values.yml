@@ -12,7 +12,7 @@ monitoring:
   prometheus: 
     enabled: true
 
-elastic-cloud:
+elasticcloud:
   enabled: true
   
 # Services list allows arbitrary charts to be deployed and configured
