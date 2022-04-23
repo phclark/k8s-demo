@@ -26,7 +26,7 @@ spec:
         pathType: ImplementationSpecific
       - backend:
           service:
-            name: demo-api
+            name: {{ template "demo-api.fullname" . }}
             port: 
               name: http
         pathType: ImplementationSpecific
