@@ -17,5 +17,7 @@ spec:
     helm:
       valueFiles:
       - ../../../../../environments/dev/values.yml
-syncPolicy:
-    automated: {}
+  syncPolicy:
+      automated:  
+        prune: true
+        selfHeal: true
