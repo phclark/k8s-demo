@@ -5,7 +5,7 @@ image:
   tag: 0.0.14
 ingress:
   enabled: true
-  hostname: api.beta.grainfreewoodworks.com
+  hostname: api-beta1.grainfreewoodworks.com
 nodeSelector: {}
 replicaCount: 1
 resources: {}
