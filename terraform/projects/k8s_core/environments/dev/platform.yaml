@@ -3,6 +3,11 @@ kind: application
 name: platform
 version: 0.0.1
 appVersion: 0.0.1
+metadata:
+  name: platform
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: argocd
