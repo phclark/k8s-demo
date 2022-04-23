@@ -31,4 +31,5 @@ spec:
               name: http
         pathType: ImplementationSpecific
   tls:
-  - hosts: {{ .Values.ingress.hostname }}
+  - hosts: 
+    - {{ .Values.ingress.hostname }}
