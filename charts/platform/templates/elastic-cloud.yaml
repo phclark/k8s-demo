@@ -22,7 +22,6 @@ spec:
 {{ indent 8 $key }}: 
   {{ indent 8 (toYaml $value) }}
 {{- end }}
-    {{- end }}  
   syncPolicy:
     automated: {}
 {{ end }}
