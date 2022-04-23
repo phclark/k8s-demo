@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: elastic-cloud
+  name: elastic-cloud-crds
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -12,17 +12,9 @@ spec:
     server: {{ .Values.destination.server }}
   project: {{ .Values.project }}
   source:
-    chart: eck-operator
+    chart: eck-operator-crds
     repoURL: https://helm.elastic.co
     targetRevision: 2.1.0
-    helm:
-      values: |
-        # Values
-{{- range $key, $value := .Values.elasticcloud.values }}
-{{ indent 8 $key }}: 
-  {{ indent 8 (toYaml $value) }}
-{{- end }}
-    {{- end }}  
   syncPolicy:
     automated: {}
 {{ end }}
