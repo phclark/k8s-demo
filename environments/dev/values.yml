@@ -28,7 +28,7 @@ services:
     namespace: api
     nameOverride: demo-api-beta1 
     valueFiles: 
-      - values/demo-api-beta1.yml
+      - ../../environments/dev/values/demo-api-beta1.yml # relative to charts/demo-api
   - chart: workflows
     namespace: argo-workflows
     version: 0.0.1
