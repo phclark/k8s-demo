@@ -24,6 +24,6 @@ resource "helm_release" "argocd" {
 }
 
 resource "kubernetes_manifest" "root-app" {
-  manifest = yamldecode(templatefile("${path.root}/argocd-values.yaml", {
+  manifest = yamldecode(templatefile("${path.root}/platform.yaml", {
   }))
 }
