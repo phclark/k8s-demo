@@ -22,12 +22,8 @@ services:
     values:
       replicaCount: 1
       ingress:
-        annotations:
-          kubernetes.io/ingress.class: alb
-          kubernetes.io/tls-acme: 'true'
         enabled: true
-        hosts:
-          - api.grainfreewoodworks.com
+        hostname: api.grainfreewoodworks.com
   - chart: demo-api
     namespace: api
     nameOverride: demo-api-beta1 
