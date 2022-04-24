@@ -15,11 +15,6 @@ spec:
     chart: eck-operator
     repoURL: https://helm.elastic.co
     targetRevision: 2.1.0
-    helm:
-      valueFiles: 
-        {{- range $rangeItem.valueFiles }}
-        - {{ . }}
-        {{- end }}
   syncPolicy:
     automated: {}
 {{ end }}
