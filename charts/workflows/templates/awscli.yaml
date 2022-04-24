@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: awscli
+  namespace: argo-workflows
 spec:
   entrypoint: awscli
   arguments:
