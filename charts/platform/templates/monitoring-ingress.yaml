@@ -10,12 +10,17 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
     alb.ingress.kubernetes.io/group.name: shared
+    {{ if .Values.monitoring.grafana.enabled }}
     external-dns.alpha.kubernetes.io/hostname: grafana.grainfreewoodworks.com
+    {{ end }}
+    {{ if .Values.monitoring.loki.enabled }}
     external-dns.alpha.kubernetes.io/hostname: loki.grainfreewoodworks.com
+    {{ end }}
   name: ingress
   namespace: monitoring
 spec:
   rules:
+  {{ if .Values.monitoring.grafana.enabled }}
   - host: grafana.grainfreewoodworks.com
     http:
       paths:
@@ -32,6 +37,8 @@ spec:
             port: 
               name: service
         pathType: ImplementationSpecific
+  {{ end }}
+  {{ if .Values.monitoring.loki.enabled }}
   - host: loki.grainfreewoodworks.com
     http:
       paths:
@@ -48,7 +55,12 @@ spec:
             port: 
               name: http-metrics
         pathType: ImplementationSpecific
+  {{ end }}
   tls:
   - hosts:
+    {{ if .Values.monitoring.grafana.enabled }}
     - grafana.grainfreewoodworks.com
+    {{ end }}
+    {{ if .Values.monitoring.grafana.enabled }}
     - loki.grainfreewoodworks.com
+    {{ end }}
