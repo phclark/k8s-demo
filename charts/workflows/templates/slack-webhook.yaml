@@ -10,22 +10,22 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
     alb.ingress.kubernetes.io/group.name: shared
-    external-dns.alpha.kubernetes.io/hostname: api.grainfreewoodworks.com
+    external-dns.alpha.kubernetes.io/hostname: webhook.grainfreewoodworks.com
   name: ingress
   namespace: argo-workflows
 spec:
   rules:
-  - host: api.grainfreewoodworks.com
+  - host: webhook.grainfreewoodworks.com
     http:
       paths:
-      - path: /example
+      - path: /*
         backend:
           service:
             name: ssl-redirect
             port: 
               name: use-annotation
         pathType: ImplementationSpecific
-      - path: /example
+      - path: /*
         backend:
           service:
             name: webhook-example
@@ -34,7 +34,7 @@ spec:
         pathType: ImplementationSpecific
   tls:
   - hosts:
-    - api.grainfreewoodworks.com
+    - webhook.grainfreewoodworks.com
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: EventSource
@@ -43,33 +43,10 @@ metadata:
   namespace: argo-workflows
 spec:
   webhook:
-    # event-source can run multiple HTTP servers. Simply define a unique port to start a new HTTP server
     example:
-      # port to run HTTP server on
       port: "12000"
-      # endpoint to listen to
       endpoint: /example
-      # HTTP request method to allow. In this case, only POST requests are accepted
       method: POST
-
-#    example-foo:
-#      port: "12000"
-#      endpoint: /example2
-#      method: POST
-
-# Uncomment to use secure webhook
-#    example-secure:
-#      port: "13000"
-#      endpoint: "/secure"
-#      method: "POST"
-#      # k8s secret that contains the cert
-#      serverCertSecret:
-#        name: my-secret
-#        key: cert-key
-#      # k8s secret that contains the private key
-#      serverKeySecret:
-#        name: my-secret
-#        key: pk-key
 ---
 apiVersion: v1
 kind: Service
@@ -77,11 +54,11 @@ metadata:
   name: webhook-example
   namespace: argo-workflows
 spec:
+  type: ClusterIP
   ports:
-  - port: 12000
-    protocol: TCP
-    targetPort: 12000
-    name: http
+    - port: 12000
+      targetPort: http
+      protocol: TCP
+      name: http
   selector:
     eventsource-name: webhook-example
-  type: ClusterIP
