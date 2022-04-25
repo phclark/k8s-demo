@@ -60,4 +60,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    eventsource-name: webhook
+    eventsource-name: webhook-example
