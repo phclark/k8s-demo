@@ -32,7 +32,6 @@ spec:
             port: 
               name: http-metrics
         pathType: ImplementationSpecific
-  {{ end }}
   tls:
   - hosts:
     - api.grainfreewoodworks.com
