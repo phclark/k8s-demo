@@ -31,7 +31,7 @@ module "eks" {
   eks_managed_node_group_defaults = {
     ami_type               = "AL2_x86_64"
     disk_size              = 50
-    instance_types         = ["t3.medium", "t3.large", "c5.large"]
+    instance_types         = ["t3a.xlarge", "m6g.xlarge", "m5a.xlarge"]
     vpc_security_group_ids = []
   }
 
@@ -41,7 +41,7 @@ module "eks" {
       max_size     = 10
       desired_size = 3
 
-      instance_types = ["t4g.xlarge"]
+      instance_types = ["t3a.xlarge", "m6g.xlarge", "m5a.xlarge"]
       capacity_type  = "SPOT"
       labels         = var.tags
 
