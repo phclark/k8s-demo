@@ -47,6 +47,10 @@ spec:
       port: "12000"
       endpoint: /example
       method: POST
+    health:
+      port: "12000"
+      endpoint: /health
+      method: GET
 ---
 apiVersion: v1
 kind: Service
