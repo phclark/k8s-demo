@@ -12,9 +12,9 @@ spec:
     server: {{ .Values.destination.server }}
   project:  {{ .Values.project }}
   source:
-    path: charts/prometheus
-    repoURL: {{ .Values.source.repoURL }}
-    targetRevision: {{ .Values.source.targetRevision }}
+    chart: prometheus-community/prometheus
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 15.8.5
   syncPolicy:
     automated: {}
 {{ end }}

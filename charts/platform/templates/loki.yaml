@@ -12,9 +12,9 @@ spec:
     server: {{ .Values.destination.server }}
   project: {{ .Values.project }}
   source:
-    path: charts/loki
-    repoURL: {{ .Values.source.repoURL }}
-    targetRevision: {{ .Values.source.targetRevision }}
+    chart: grafana/loki-stack
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 2.6.4
   syncPolicy:
     automated: {}
 {{ end }}
