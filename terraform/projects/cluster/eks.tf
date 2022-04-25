@@ -41,7 +41,7 @@ module "eks" {
       max_size     = 10
       desired_size = 3
 
-      instance_types = ["t3.large"]
+      instance_types = ["t4g.xlarge"]
       capacity_type  = "SPOT"
       labels         = var.tags
 
