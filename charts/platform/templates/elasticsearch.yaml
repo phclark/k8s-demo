@@ -16,4 +16,15 @@ spec:
     count: {{ .Values.elasticcloud.nodeSets.default.count}}
     config:
       node.store.allow_mmap: false
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: quickstart
+  namespace: elastic
+spec:
+  version: 8.1.3
+  count: 1
+  elasticsearchRef:
+    name: kibana
 {{ end }}
