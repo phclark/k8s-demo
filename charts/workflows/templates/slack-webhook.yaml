@@ -40,6 +40,8 @@ kind: EventSource
 metadata:
   name: webhook-example
   namespace: argo-workflows
+  labels:
+    app: webhook-example
 spec:
   webhook:
     example:
@@ -60,4 +62,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    eventsource-name: webhook-example
+    app: webhook-example
