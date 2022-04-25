@@ -18,6 +18,8 @@ elasticcloud:
     default:
       count: 2
 
+argoevents:
+  enabled: true
   
 # Services list allows arbitrary charts to be deployed and configured
 services:
