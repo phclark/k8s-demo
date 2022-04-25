@@ -4,12 +4,9 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/healthcheck-path: "/health"
-    alb.ingress.kubernetes.io/healthcheck-port: "12001"
-    alb.ingress.kubernetes.io/healthcheck-protocol: "HTTP"
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/backend-protocol: HTTP
-    alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
     alb.ingress.kubernetes.io/group.name: shared
@@ -49,10 +46,6 @@ spec:
       port: "12000"
       endpoint: /example
       method: POST
-    health:
-      port: "12001"
-      endpoint: /health
-      method: GET
 ---
 apiVersion: v1
 kind: Service
@@ -66,9 +59,5 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-    - port: 12001
-      targetPort: health
-      protocol: TCP
-      name: health
   selector:
     eventsource-name: webhook-example
