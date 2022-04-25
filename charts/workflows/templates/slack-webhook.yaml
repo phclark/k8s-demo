@@ -30,7 +30,7 @@ spec:
           service:
             name: webhook-example
             port: 
-              name: http-metrics
+              name: http
         pathType: ImplementationSpecific
   tls:
   - hosts:
@@ -81,6 +81,7 @@ spec:
   - port: 12000
     protocol: TCP
     targetPort: 12000
+    name: http
   selector:
     eventsource-name: webhook-example
   type: ClusterIP
