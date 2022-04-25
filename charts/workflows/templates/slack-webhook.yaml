@@ -12,7 +12,7 @@ metadata:
     alb.ingress.kubernetes.io/group.name: shared
     external-dns.alpha.kubernetes.io/hostname: api.grainfreewoodworks.com
   name: ingress
-  namespace: argo-events
+  namespace: argo-workflows
 spec:
   rules:
   - host: api.grainfreewoodworks.com
@@ -40,7 +40,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: EventSource
 metadata:
   name: webhook-example
-  namespace: argo-events
+  namespace: argo-workflows
 spec:
   service:
     ports:

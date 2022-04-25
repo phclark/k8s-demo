@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: EventBus
 metadata:
   name: default
-  namespace: argo-events
+  namespace: argo-workflows
 spec:
   jetstream:
     version: 2.8.1  # see 'version' section below
