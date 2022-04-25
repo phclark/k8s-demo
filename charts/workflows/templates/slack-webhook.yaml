@@ -5,6 +5,8 @@ metadata:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/healthcheck-path: "/health"
+    alb.ingress.kubernetes.io/healthcheck-port: 12001
+    alb.ingress.kubernetes.io/healthcheck-protocol: "HTTP"
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
@@ -48,7 +50,7 @@ spec:
       endpoint: /example
       method: POST
     health:
-      port: "12000"
+      port: "12001"
       endpoint: /health
       method: GET
 ---
@@ -64,5 +66,9 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: 12001
+      targetPort: health
+      protocol: TCP
+      name: health
   selector:
     eventsource-name: webhook-example
