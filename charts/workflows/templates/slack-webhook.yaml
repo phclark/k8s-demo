@@ -28,7 +28,7 @@ spec:
       - path: /example
         backend:
           service:
-            name: example
+            name: webhook-example
             port: 
               name: http-metrics
         pathType: ImplementationSpecific
@@ -42,10 +42,6 @@ metadata:
   name: webhook-example
   namespace: argo-workflows
 spec:
-  service:
-    ports:
-      - port: 12000
-        targetPort: 12000
   webhook:
     # event-source can run multiple HTTP servers. Simply define a unique port to start a new HTTP server
     example:
@@ -74,3 +70,17 @@ spec:
 #      serverKeySecret:
 #        name: my-secret
 #        key: pk-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webhook-example
+  namespace: argo-workflows
+spec:
+  ports:
+  - port: 12000
+    protocol: TCP
+    targetPort: 12000
+  selector:
+    eventsource-name: webhook-example
+  type: ClusterIP
