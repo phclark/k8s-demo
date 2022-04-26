@@ -4,8 +4,6 @@ metadata:
   name: webhook
   namespace: argo-workflows
 spec:
-  template:
-    serviceAccountName: argo-workflows-actions
   dependencies:
     - name: slack
       eventSourceName: slack
@@ -13,6 +11,7 @@ spec:
   triggers:
     - template:
         name: webhook-workflow-trigger
+        serviceAccountName: argo-workflows-actions
         k8s:
           group: argoproj.io
           version: v1alpha1
