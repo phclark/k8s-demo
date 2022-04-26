@@ -42,7 +42,7 @@ spec:
                     args: ["{{inputs.parameters.message}}"]
           parameters:
             - src:
-                dependencyName: test-dep
+                dependencyName: slack
               dest: spec.arguments.parameters.0.value
   # triggers:
     - template:
