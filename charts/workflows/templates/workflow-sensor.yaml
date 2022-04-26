@@ -43,10 +43,12 @@ spec:
                     source: |
                       aws s3 ls
                       kubectl get namespaces
-                      payload={{`{{inputs.parameters.payload}}`}}
+                      payload=$(echo "{{`{{inputs.parameters.payload}}`}}" | base64 --decode)
                       echo $payload
-                      # command=$(echo $payload | jq -r '.command')
-
+                      command=$(echo $payload | jq -r '.command')
+                      text=$(echo $payload | jq -r '.text')
+                      response_url=$(echo $payload | jq -r '.response_url')
+                      curl -X post $response_url -H 'content-type: application/json' -D '{"text": "Message received: $text"}'
           parameters:
             - src:
                 dependencyName: slack
