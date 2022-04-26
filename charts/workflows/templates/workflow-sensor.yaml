@@ -51,9 +51,7 @@ spec:
                       echo "command: $command"
                       echo "text: $text"
                       echo "response_url: $response_url"
-                      curl -v -X post $response_url \
-                        --header 'Content-Type: application/json' \
-                        --data-raw '{ "text": "test message" }'
+                      curl --location --request POST $response_url --header 'Content-Type: application/json' --data-raw '{"text":"test message"}'
           parameters:
             - src:
                 dependencyName: slack
