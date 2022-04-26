@@ -1,6 +1,5 @@
 locals {
-  service_account_name = "argo-workflows-actions"
-
+  service_account_name = "argo-events-sa"
 }
 
 resource "kubernetes_namespace" "argo-workflows" {
