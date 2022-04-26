@@ -14,7 +14,7 @@ spec:
     - template:
         name: argo-workflow-trigger
         argoWorkflow:
-          operation: submit
+          operation: create
           args:
             - --node-field-selector
             - phase=abc
@@ -22,6 +22,8 @@ spec:
             resource:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
+              metadata:
+                name: special-trigger
               spec:
                 entrypoint: whalesay
                 arguments:
