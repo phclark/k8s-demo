@@ -43,7 +43,7 @@ spec:
                     source: |
                       aws s3 ls
                       kubectl get namespaces
-                      payload=$(echo "{{`{{inputs.parameters.payload}}`}}" | base64 --decode)
+                      payload=$(echo "{{`{{inputs.parameters.payload}}`}}" | base64 -d)
                       echo $payload
                       command=$(echo $payload | jq -r '.command')
                       text=$(echo $payload | jq -r '.text')
