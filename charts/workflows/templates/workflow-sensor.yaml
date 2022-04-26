@@ -23,23 +23,27 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                generateName: webhook-
+                generateName: slack-
               spec:
-                entrypoint: whalesay
+                entrypoint: script
                 arguments:
                   parameters:
-                  - name: message
-                    # the value will get overridden by event payload from test-dep
-                    value: hello world
+                  - name: payload
                 templates:
-                - name: whalesay
+                - name: script
                   inputs:
                     parameters:
                     - name: message
-                  container:
-                    image: docker/whalesay:latest
-                    command: [cowsay]
-                    args: ["{{`{{inputs.parameters.message}}`}}"]
+                  script:
+                    image: jshimko/kube-tools-aws:latest
+                    command: [/bin/bash]
+                    source: |
+                      aws s3 ls
+                      kubectl get namespaces
+                      payload={{`{{inputs.parameters.payload}}`}}
+                      echo $payload
+                      # command=$(echo $payload | jq -r '.command')
+
           parameters:
             - src:
                 dependencyName: slack
