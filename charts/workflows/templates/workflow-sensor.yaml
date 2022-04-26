@@ -12,36 +12,35 @@ spec:
       eventName: example-insecure
   triggers:
     - template:
-        name: argo-workflow-trigger
-        argoWorkflow:
+        name: webhook-workflow-trigger
+        k8s:
+          group: argoproj.io
+          version: v1alpha1
+          resource: workflows
           operation: create
-          args:
-            - --node-field-selector
-            - phase=abc
           source:
             resource:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                generateName: slack-
+                generateName: webhook-
               spec:
                 entrypoint: whalesay
                 arguments:
                   parameters:
-                    - name: message
-                      # the value will get overridden by event payload from test-dep
-                      value: hello world
+                  - name: message
+                    # the value will get overridden by event payload from test-dep
+                    value: hello world
                 templates:
-                  - name: whalesay
-                    inputs:
-                      parameters:
-                        - name: message
-                    container:
-                      image: docker/whalesay:latest
-                      command: [cowsay]
-                      args: ["{{`{{inputs.parameters.message}}`}}"]
+                - name: whalesay
+                  inputs:
+                    parameters:
+                    - name: message
+                  container:
+                    image: docker/whalesay:latest
+                    command: [cowsay]
+                    args: ["{{inputs.parameters.message}}"]
           parameters:
             - src:
                 dependencyName: test-dep
-                dataKey: body
               dest: spec.arguments.parameters.0.value
