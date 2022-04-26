@@ -29,6 +29,7 @@ spec:
                 arguments:
                   parameters:
                   - name: payload
+                    value: '{"message":"default"}'
                 templates:
                 - name: script
                   inputs:
