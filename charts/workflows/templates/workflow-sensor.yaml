@@ -5,7 +5,7 @@ metadata:
   namespace: argo-workflows
 spec:
   template:
-    serviceAccountName: argo-workflows-actions
+    serviceAccountName: argo-events-sa
   dependencies:
     - name: slack
       eventSourceName: slack
