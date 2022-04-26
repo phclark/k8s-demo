@@ -43,11 +43,11 @@ spec:
                     source: |
                       aws s3 ls
                       kubectl get namespaces
-                      slack_data='$(echo '{{`{{inputs.parameters.payload}}`}}' | jq -r '.data' | base64 -d)'
+                      slack_data=$(echo '{{`{{inputs.parameters.payload}}`}}' | jq -r '.data' | base64 -d)
                       echo $slack_data
-                      command=$(echo '$slack_data' | jq -r '.command')
-                      text=$(echo '$slack_data' | jq -r '.text')
-                      response_url=$(echo '$slack_data' | jq -r '.response_url')
+                      command=$(echo $slack_data | jq -r '.command')
+                      text=$(echo $slack_data | jq -r '.text')
+                      response_url=$(echo $slack_data | jq -r '.response_url')
                       echo "command: $command"
                       echo "text: $text"
                       echo "response_url: $response_url"
