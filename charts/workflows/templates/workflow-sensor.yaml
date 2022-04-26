@@ -45,13 +45,25 @@ spec:
                       kubectl get namespaces
                       slack_data=$(echo '{{`{{inputs.parameters.payload}}`}}' | jq -r '.data' | base64 -d)
                       echo $slack_data
-                      command=$(echo $slack_data | jq -r '.command')
-                      text=$(echo $slack_data | jq -r '.text')
-                      response_url=$(echo $slack_data | jq -r '.response_url')
-                      echo "command: $command"
-                      echo "text: $text"
-                      echo "response_url: $response_url"
-                      curl --location --request POST $response_url --header 'Content-Type: application/json' --data-raw "{\"text\":\"Message received: $text\"}"
+
+                      type=$(echo $slack_data | jq -r '.type')
+
+                      if [ "$type" == "app_mention" ]; then
+                        command=$(echo $slack_data | jq -r '.command')
+                        text=$(echo $slack_data | jq -r '.text')
+                        response_url=$(echo $slack_data | jq -r '.response_url')
+                        user_id=$(echo $slack_data | jq -r '.user_id')
+                        
+                        echo "text: $text"
+                        echo "response_url: $response_url"
+                        echo "command: $command"
+                        curl --location --request POST $response_url --header 'Content-Type: application/json' --data-raw "{\"text\":\"Message received: $text\"}"
+                      
+                      else
+                        text=$(echo $slack_data | jq -r '.Data.text')
+                        user_id=$(echo $slack_data | jq -r '.Data.user')
+                      fi
+                      
           parameters:
             - src:
                 dependencyName: slack
