@@ -1,0 +1,84 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-path: '/health'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/group.name: shared
+    external-dns.alpha.kubernetes.io/hostname: slack.grainfreewoodworks.com
+  name: slack
+  namespace: argo-workflows
+spec:
+  rules:
+  - host: slack.grainfreewoodworks.com
+    http:
+      paths:
+      - path: /*
+        backend:
+          service:
+            name: ssl-redirect
+            port: 
+              name: use-annotation
+        pathType: ImplementationSpecific
+      - backend:
+          service:
+            name: slack
+            port: 
+              name: http
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - slack.grainfreewoodworks.com
+---
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: slack
+  namespace: argo-workflows
+spec:
+  slack:
+    example-insecure:
+      # hook contains configuration for the HTTP server running in the event-source.
+      # Slack will send events to following port and endpoint
+      webhook:
+        # endpoint to listen events on
+        endpoint: "/"
+        # port to run HTTP server on
+        port: "12000"
+        # HTTP request method to allow. In this case, only POST requests are accepted
+        method: POST
+      # token contains information about K8s secret that stores the token
+      token:
+        # Name of the K8s secret that contains the token
+        name: slack-secret
+        # Key within the K8s secret whose corresponding value (must be base64 encoded) is token
+        key: tokenkey
+      # signingSecret contains information about the K8s secret that stores
+      # Slack Signing Secret used to sign every request from Slack
+      signingSecret:
+        # Name of the K8s secret that contains the signingSecret
+        name: slack-secret
+        # Key within the K8s secret whose corresponding value contains the
+        # base64-encoded Slack signing secret
+        key: signingSecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: slack
+  namespace: argo-workflows
+spec:
+  ports:
+  - port: 12000
+    protocol: TCP
+    targetPort: 12000
+    name: http
+  selector:
+    eventsource-name: slack
+  type: NodePort
