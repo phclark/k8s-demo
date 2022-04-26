@@ -53,7 +53,7 @@ metadata:
   name: webhook
   namespace: argo-workflows
 spec:
-  type: CluserIP
+  type: ClusterIP
   ports:
     - port: 12000
       targetPort: http
