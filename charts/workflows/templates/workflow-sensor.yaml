@@ -24,6 +24,7 @@ spec:
               metadata:
                 generateName: slack-
                 namespace: argo-workflows
+                serviceAccount: argo-workflows-actions
               spec:
                 entrypoint: script
                 arguments:
