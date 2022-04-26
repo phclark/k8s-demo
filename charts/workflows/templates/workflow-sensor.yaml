@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
   name: webhook
-  namespace: argo-workflows
 spec:
   template:
     serviceAccountName: argo-workflows-actions

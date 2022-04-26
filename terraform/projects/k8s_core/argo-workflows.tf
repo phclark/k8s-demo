@@ -13,7 +13,7 @@ resource "helm_release" "argo-workflows" {
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-workflows"
   version    = "0.13.1"
-  namespace  = kubernetes_namespace.argo-workflows.id
+  # namespace  = kubernetes_namespace.argo-workflows.id
 
   create_namespace = false
 
@@ -30,8 +30,8 @@ resource "helm_release" "argo-workflows" {
 resource "kubernetes_service_account" "workflows" {
   automount_service_account_token = true
   metadata {
-    name      = local.service_account_name
-    namespace = kubernetes_namespace.argo-workflows.id
+    name = local.service_account_name
+    # namespace = kubernetes_namespace.argo-workflows.id
     annotations = {
       "eks.amazonaws.com/role-arn"               = aws_iam_role.workflows.arn
       "eks.amazonaws.com/sts-regional-endpoints" = true
@@ -109,8 +109,8 @@ resource "kubernetes_cluster_role_binding" "workflows" {
     name      = local.service_account_name
   }
   subject {
-    kind      = "ServiceAccount"
-    name      = local.service_account_name
-    namespace = kubernetes_namespace.argo-workflows.id
+    kind = "ServiceAccount"
+    name = local.service_account_name
+    # namespace = kubernetes_namespace.argo-workflows.id
   }
 }
