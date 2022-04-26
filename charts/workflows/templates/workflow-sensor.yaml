@@ -23,6 +23,7 @@ spec:
               kind: Workflow
               metadata:
                 generateName: slack-
+                namespace: argo-workflows
               spec:
                 entrypoint: script
                 arguments:
