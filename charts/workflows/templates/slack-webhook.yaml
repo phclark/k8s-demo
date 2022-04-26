@@ -37,12 +37,11 @@ spec:
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: EventSource
-metadata:
-  name: webhook
+  name: webhook # eventSourceName
   namespace: argo-workflows
 spec:
   webhook:
-    example:
+    example: # eventName
       port: "12000"
       endpoint: /example
       method: POST
@@ -53,11 +52,10 @@ metadata:
   name: webhook
   namespace: argo-workflows
 spec:
-  type: ClusterIP
   ports:
-    - port: 12000
-      targetPort: http
-      protocol: TCP
-      name: http
+  - port: 12000
+    protocol: TCP
+    targetPort: 12000
   selector:
     eventsource-name: webhook
+  type: NodePort
