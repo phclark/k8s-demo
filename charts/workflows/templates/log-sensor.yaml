@@ -8,6 +8,9 @@ spec:
     - name: test-dep
       eventSourceName: webhook
       eventName: example
+    - name: slack
+      eventSourceName: slack
+      eventName: example-insecure
   triggers:
     - template:
         name: log-trigger
