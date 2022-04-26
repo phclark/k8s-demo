@@ -53,7 +53,7 @@ spec:
                       echo "response_url: $response_url"
                       curl -X post $response_url \
                         -H 'content-type: application/json' \
-                        -d {"text": "Message received: $text"}
+                        -d "{\"text\": \"Message received: $text\"}"
           parameters:
             - src:
                 dependencyName: slack
