@@ -13,6 +13,7 @@ spec:
   triggers:
     - template:
         name: webhook-workflow-trigger
+        serviceAccountName: argo-workflows-actions
         k8s:
           group: argoproj.io
           version: v1alpha1
