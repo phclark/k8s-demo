@@ -37,6 +37,7 @@ spec:
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: EventSource
+metadata:
   name: webhook # eventSourceName
   namespace: argo-workflows
 spec:
