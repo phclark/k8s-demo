@@ -57,6 +57,7 @@ spec:
   - port: 12000
     protocol: TCP
     targetPort: 12000
+    name: http
   selector:
     eventsource-name: webhook
   type: NodePort
