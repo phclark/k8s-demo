@@ -45,41 +45,41 @@ spec:
                 dependencyName: slack
               dest: spec.arguments.parameters.0.value
   # triggers:
-    - template:
-        name: webhook-workflow-trigger
-        k8s:
-          group: argoproj.io
-          version: v1alpha1
-          resource: workflows
-          operation: create
-          source:
-            resource:
-              apiVersion: argoproj.io/v1alpha1
-              kind: Workflow
-              metadata:
-                generateName: slack-
-              spec:
-                entrypoint: script
-                arguments:
-                  parameters:
-                  - name: payload
-                    value: default
-                templates:
-                - name: script
-                  inputs:
-                    parameters:
-                    - name: payload
-                  script:
-                    image: jshimko/kube-tools-aws:latest
-                    command: [/bin/bash]
-                    source: |
-                      aws s3 ls
-                      kubectl get namespaces
-                      payload={{`{{inputs.parameters.payload}}`}}
-                      echo $payload
-                      # command=$(echo $payload | jq -r '.command')
+    # - template:
+    #     name: webhook-workflow-trigger
+    #     k8s:
+    #       group: argoproj.io
+    #       version: v1alpha1
+    #       resource: workflows
+    #       operation: create
+    #       source:
+    #         resource:
+    #           apiVersion: argoproj.io/v1alpha1
+    #           kind: Workflow
+    #           metadata:
+    #             generateName: slack-
+    #           spec:
+    #             entrypoint: script
+    #             arguments:
+    #               parameters:
+    #               - name: payload
+    #                 value: default
+    #             templates:
+    #             - name: script
+    #               inputs:
+    #                 parameters:
+    #                 - name: payload
+    #               script:
+    #                 image: jshimko/kube-tools-aws:latest
+    #                 command: [/bin/bash]
+    #                 source: |
+    #                   aws s3 ls
+    #                   kubectl get namespaces
+    #                   payload={{`{{inputs.parameters.payload}}`}}
+    #                   echo $payload
+    #                   # command=$(echo $payload | jq -r '.command')
 
-          parameters:
-            - src:
-                dependencyName: slack
-              dest: spec.arguments.parameters.0.value
+    #       parameters:
+    #         - src:
+    #             dependencyName: slack
+    #           dest: spec.arguments.parameters.0.value
