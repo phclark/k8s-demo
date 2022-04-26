@@ -23,7 +23,7 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                name: special-trigger
+                generateName: slack-
               spec:
                 entrypoint: whalesay
                 arguments:
