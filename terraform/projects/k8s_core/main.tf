@@ -17,6 +17,10 @@ provider "helm" {
 }
 
 resource "null_resource" "helm_plugin" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
   provisioner "local-exec" {
     command = "helm plugin install https://github.com/hypnoglow/helm-s3.git"
   }
