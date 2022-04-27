@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "helm" {
   #checkov:skip=CKV_AWS_19:Encryption
   #checkov:skip=CKV2_AWS_6:Skip public access block
 
-  bucket = "${var.environment}-helm-charts"
+  bucket = "k8s-demo-${var.environment}-helm-charts"
 
   server_side_encryption_configuration {
     rule {
