@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "helm" {
   #checkov:skip=CKV_AWS_18:Access logging not required
   #checkov:skip=CKV_AWS_145:Encryption
   #checkov:skip=CKV_AWS_19:Encryption
-  #checkov:skip=CKV_AWS_6:Encryption
+  #checkov:skip=CKV2_AWS_6:Skip public access block
 
   bucket = "${var.environment}-helm-charts"
 
