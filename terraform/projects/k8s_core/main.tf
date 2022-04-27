@@ -14,7 +14,9 @@ provider "helm" {
     token                  = data.aws_eks_cluster_auth.aws_iam_authenticator.token
     cluster_ca_certificate = base64decode(data.aws_eks_cluster.target.certificate_authority.0.data)
   }
+}
 
+resource "null_resource" "helm_plugin" {
   provisioner "local-exec" {
     command = "helm plugin install https://github.com/hypnoglow/helm-s3.git"
   }
