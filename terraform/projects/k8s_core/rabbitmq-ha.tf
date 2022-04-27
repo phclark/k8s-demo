@@ -5,4 +5,6 @@ resource "helm_release" "rabbitmq" {
   version          = "1.47.1"
   namespace        = "rabbitmq"
   create_namespace = true
+
+  depends_on = [null_resource.helm_plugin]
 }
