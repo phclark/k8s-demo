@@ -1,4 +1,4 @@
-resource "helm_release" "argocd" {
+resource "helm_release" "rabbitmq" {
   name             = "rabbitmq-ha"
   repository       = "s3://k8s-demo-dev-helm-charts"
   chart            = "rabbitmq-ha"
