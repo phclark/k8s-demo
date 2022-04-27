@@ -19,3 +19,9 @@ resource "aws_s3_bucket" "helm" {
 
   tags = var.tags
 }
+
+resource "aws_s3_bucket_public_access_block" "helm" {
+  bucket              = aws_s3_bucket.helm.id
+  block_public_acls   = true
+  block_public_policy = true
+}
