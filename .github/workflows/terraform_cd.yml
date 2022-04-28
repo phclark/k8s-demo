@@ -53,3 +53,13 @@ jobs:
           terraform validate
           terraform plan -out tf.plan
           terraform apply tf.plan
+          
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v19
+
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
