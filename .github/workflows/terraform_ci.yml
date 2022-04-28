@@ -1,0 +1,55 @@
+# Deploys Terraform configurations on changes
+
+name: Terraform CI
+
+on:
+  push:
+    branches: 
+      - main
+    paths:
+      - terraform/modules/
+
+  workflow_dispatch:
+
+env:
+  environment: dev
+  AWS_REGION: us-east-1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.4
+      - uses: bridgecrewio/checkov-action@master
+        with:
+          quiet: true 
+          directory: terraform/
+          framework: terraform
+      - name: Setup environment
+        run: |
+          export 
+          pip install \
+            pyyaml==6.0 \
+            semver==2.13.0
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v19
+      - id: find-modules
+        name: Find Modules
+        uses: jannekem/run-python-script-action@v1.2
+        with:
+          script: |
+            import yaml
+            import json
+            changed_files = "${{ steps.changed-files.outputs.all_changed_files }}".split(' ')
+            print(changed_files)
