@@ -7,7 +7,7 @@ on:
     branches: 
       - main
     paths:
-      - terraform/modules/
+      - terraform/modules/**
 
   workflow_dispatch:
 
