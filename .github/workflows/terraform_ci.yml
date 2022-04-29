@@ -58,7 +58,10 @@ jobs:
             paths = list(set([os.path.dirname(f) for f in changed_files]))
 
             for path in paths:
-              print(f"Testing: ${path}")
+              print(f"Testing: {path}")
+              if !path.endswith('test'):
+                path = f"{path}/test"
+                
               p = subprocess.Popen(["go", "test"], cwd=path)
 
 
