@@ -46,7 +46,7 @@ jobs:
           directory: terraform/
           framework: terraform
       - run: |
-        echo ${{ matrix.module }}
+          echo ${{ matrix.module }}
 
 
             
