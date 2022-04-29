@@ -47,6 +47,3 @@ jobs:
           framework: terraform
       - run: |
           echo ${{ matrix.module }}
-
-
-            
