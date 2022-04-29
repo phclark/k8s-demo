@@ -51,5 +51,14 @@ jobs:
           script: |
             import yaml
             import json
+            import os
+            import subprocess
+
             changed_files = "${{ steps.changed-files.outputs.all_changed_files }}".split(' ')
-            print(changed_files)
+            paths = list(set([os.path.dirname(f) for f in changes_files]))
+
+            for path in paths:
+              p = subprocess.Popen(["go", "test"], cwd=path)
+
+
+            
