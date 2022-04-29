@@ -55,7 +55,7 @@ jobs:
             import subprocess
 
             changed_files = "${{ steps.changed-files.outputs.all_changed_files }}".split(' ')
-            paths = list(set([os.path.dirname(f) for f in changes_files]))
+            paths = list(set([os.path.dirname(f) for f in changed_files]))
 
             for path in paths:
               p = subprocess.Popen(["go", "test"], cwd=path)
