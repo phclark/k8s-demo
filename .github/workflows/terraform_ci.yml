@@ -59,9 +59,9 @@ jobs:
 
             for path in paths:
               print(f"Testing: {path}")
-              if !path.endswith('test'):
+              if not path.endswith('test'):
                 path = f"{path}/test"
-                
+
               p = subprocess.Popen(["go", "test"], cwd=path)
 
 
