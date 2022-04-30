@@ -27,7 +27,7 @@ jobs:
       with:
         filters: |
           modules:
-            - 'terraform/modules/**'
+            - 'terraform/**'
 
   build:
     needs: changes
