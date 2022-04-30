@@ -32,7 +32,6 @@ jobs:
     needs: generate-matrix
     strategy:
       matrix: ${{ fromJson(needs.generate-matrix.outputs.modules) }}
-    if: ${{ fromJson(needs.generate-matrix.outputs.modules).include[0] }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
