@@ -16,14 +16,14 @@ env:
   AWS_REGION: us-east-1
 
 jobs:
-  changes:
+  generate-matrix:
     runs-on: ubuntu-latest
     outputs:
       modules: ${{ steps.filter.outputs.matrix }}
     steps:
       - uses: actions/checkout@v2
       - name: Generate matrix
-        id: filter
+        id: generate-matrix
         uses: hellofresh/action-changed-files@v2
         with:
           pattern: terraform/modules/(?P<module>[^/]+)
@@ -31,8 +31,8 @@ jobs:
   build:
     needs: changes
     strategy:
-      matrix:
-        module: ${{ fromJSON(needs.changes.modules) }}
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.modules) }}
+    if: ${{ fromJson(needs.generate-matrix.outputs.modules).include[0] }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
