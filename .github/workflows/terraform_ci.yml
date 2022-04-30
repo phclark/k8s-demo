@@ -29,7 +29,7 @@ jobs:
           pattern: terraform/modules/(?P<module>[^/]+)
 
   build:
-    needs: changes
+    needs: generate-matrix
     strategy:
       matrix: ${{ fromJson(needs.generate-matrix.outputs.modules) }}
     if: ${{ fromJson(needs.generate-matrix.outputs.modules).include[0] }}
