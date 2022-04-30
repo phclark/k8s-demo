@@ -48,8 +48,8 @@ jobs:
           directory: terraform/modules/${{ matrix.module }}
           framework: terraform
       - id: Terratest
-        working-directory: ./terraform/modules/${{ matrix.module }}
+        working-directory: terraform/modules/${{ matrix.module }}
         run: |
           echo ${{ matrix.module }}/test
+          ls -al
           go test
-
