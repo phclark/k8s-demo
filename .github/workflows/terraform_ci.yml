@@ -22,15 +22,14 @@ jobs:
       modules: ${{ steps.filter.outputs.matrix }}
     steps:
     - uses: actions/checkout@v2
-    steps:
-      - name: Generate matrix
-        id: filter
-        uses: hellofresh/action-changed-files
-        with:
-            pattern: terraform/modules/(?P<module>[^/]+)
-            default-patterns: |
-                terraform-modules
-                deploy.sh
+    - name: Generate matrix
+      id: filter
+      uses: hellofresh/action-changed-files
+      with:
+          pattern: terraform/modules/(?P<module>[^/]+)
+          default-patterns: |
+              terraform-modules
+              deploy.sh
 
   build:
     needs: changes
