@@ -27,9 +27,6 @@ jobs:
         uses: hellofresh/action-changed-files@v2
         with:
           pattern: terraform/modules/(?P<module>[^/]+)
-          default-patterns: |
-              terraform-modules
-              deploy.sh
 
   build:
     needs: changes
