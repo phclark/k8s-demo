@@ -45,7 +45,11 @@ jobs:
       - uses: bridgecrewio/checkov-action@master
         with:
           quiet: true 
-          directory: terraform/
+          directory: terraform/modules/${{ matrix.module }}
           framework: terraform
-      - run: |
-          echo ${{ matrix.module }}
+      - id: Terratest
+        working-directory: ./terraform/modules/${{ matrix.module }}
+        run: |
+          echo ${{ matrix.module }}/test
+          go test
+
