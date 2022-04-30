@@ -11,5 +11,3 @@ output "hello_world" {
 }
 
 
-
-
