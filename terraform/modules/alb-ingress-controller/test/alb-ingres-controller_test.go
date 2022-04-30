@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/stretchr/testify/assert"
+	// "github.com/stretchr/testify/assert"
 )
 
 func TestTerraformHelloWorldExample(t *testing.T) {
@@ -13,6 +13,12 @@ func TestTerraformHelloWorldExample(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		// Set the path to the Terraform code that will be tested.
 		TerraformDir: "../",
+
+		// Variables to pass to our Terraform code using -var options
+		Vars: map[string]interface{}{
+			"k8s_cluster_name": "test",
+			"alb_controller_depends_on": nil,
+		},
 	})
 
 	// Clean up resources with "terraform destroy" at the end of the test.
