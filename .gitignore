@@ -38,3 +38,4 @@ SONAR_TOKEN
 node_modules/*
 **/reports/*
 terraform/projects/k8s_core/environments/dev/.terraform.lock.hcl
+pkg/**
