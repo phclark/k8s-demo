@@ -79,7 +79,7 @@ jobs:
           chmod +x /usr/local/bin/semver
 
           latest_version=$(git describe --tags --match "${prefix}[0-9]*" --abbrev=4 HEAD) | sed "s/${prefix}//" 
-          if [[ "$latest_version" ]];
+          if [[ -z "$latest_version" ]];
           then
             latest_version="$initial_version"
             echo "No previous version found. Setting initial version to $latest_version"
