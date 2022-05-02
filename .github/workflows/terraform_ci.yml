@@ -56,13 +56,15 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - run: go version
       - uses: bridgecrewio/checkov-action@master
         with:
           quiet: true 
           directory: terraform/modules/${{ matrix.module }}
           framework: terraform
-      - id: terratest
+      - name: terraform validate
+        working-directory: terraform/modules/${{ matrix.module }}
+        run: terraform validate
+      - name: terratest
         working-directory: terraform/modules/${{ matrix.module }}
         run: |
           go test -v ./test
