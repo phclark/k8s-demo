@@ -78,7 +78,7 @@ jobs:
             https://raw.githubusercontent.com/fsaintjacques/semver-tool/master/src/semver
           chmod +x /usr/local/bin/semver
 
-          latest_version=$(git describe --tags --match "${prefix}[0-9]*" --abbrev=4 HEAD) | sed "s/${prefix}// | true" 
+          latest_version=$(git describe --tags --match "${prefix}[0-9]*" --abbrev=4 HEAD) | sed "s/${prefix}//" 
           if [[ "$latest_version" ]];
           then 
             echo "No previous version found. Setting initial version to 0.0.0"
