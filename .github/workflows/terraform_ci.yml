@@ -69,9 +69,32 @@ jobs:
         run: |
           go test -v ./test
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          DEFAULT_BUMP: none
-          SOURCE: terraform/modules/${{ matrix.module }}
+          prefix: terraform/modules/${{ matrix.module }}
+          FORCE_TAG: true
+        run: |
+          wget -O /usr/local/bin/semver \
+            https://raw.githubusercontent.com/fsaintjacques/semver-tool/master/src/semver
+          chmod +x /usr/local/bin/semver
+
+          latest_version=$(git describe --tags --match "${prefix}[0-9]*" --abbrev=4 HEAD) | sed "s/${prefix}//"
+          echo "Latest version: $latest_version"
+
+          case "${{ github.event.head_commit.message }}" in
+          major) 
+            bump_type=major ;;
+          minor)
+            bump_type=minor ;;
+          patch)
+            bump_type=patch ;;
+          *)
+            echo "No bump directive found, skipping version bump"
+          esac
+          
+          if [[ -z "$bump_type" ]];
+          then
+            new_version=$(semver bump $bump_type $latest_version)
+            echo "Tagging ${prefix}${new_version}"
+            git tag ${prefix}${new_version}
+          fi
