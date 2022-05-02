@@ -109,7 +109,8 @@ jobs:
           
           if [[ "$dry_run" != "true" ]];
           then 
-            git push
+            echo "pushing tag"
+            git push origin ${prefix}${new_version}
           else
             echo "DRY RUN, exiting without push"
           fi
