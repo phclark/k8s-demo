@@ -71,7 +71,7 @@ jobs:
       - name: Bump version and push tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          prefix: terraform/modules/${{ matrix.module }}
+          prefix: terraform/modules/${{ matrix.module }}_v
           FORCE_TAG: true
         run: |
           wget -O /usr/local/bin/semver \
