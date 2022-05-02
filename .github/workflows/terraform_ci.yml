@@ -71,15 +71,20 @@ jobs:
       - name: Bump version and push tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          initial_version: 0.0.0
           prefix: terraform/modules/${{ matrix.module }}_v
-          FORCE_TAG: true
         run: |
           wget -O /usr/local/bin/semver \
             https://raw.githubusercontent.com/fsaintjacques/semver-tool/master/src/semver
           chmod +x /usr/local/bin/semver
 
-          latest_version=$(git describe --tags --match "${prefix}[0-9]*" --abbrev=4 HEAD) | sed "s/${prefix}//"
-          echo "Latest version: $latest_version"
+          latest_version=$(git describe --tags --match "${prefix}[0-9]*" --abbrev=4 HEAD) | sed "s/${prefix}// | true" 
+          if [[ "$latest_version" ]];
+          then 
+            echo "No previous version found. Setting initial version to 0.0.0"
+          else
+            echo "Latest version: $latest_version"
+          fi
 
           case "${{ github.event.head_commit.message }}" in
           major) 
