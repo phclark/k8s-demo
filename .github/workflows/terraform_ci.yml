@@ -99,7 +99,7 @@ jobs:
             ;;
           *)
             echo "No bump directive found, skipping version bump"
-            exit(0)
+            exit 0 
           esac
           
           new_version=$(semver bump $bump_type $latest_version)
