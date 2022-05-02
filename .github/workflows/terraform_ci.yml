@@ -87,12 +87,15 @@ jobs:
           fi
 
           case "${{ github.event.head_commit.message }}" in
-          major) 
-            bump_type=major ;;
-          minor)
-            bump_type=minor ;;
-          patch)
-            bump_type=patch ;;
+          *#major*) 
+            bump_type="major" 
+            ;;
+          *#minor*)
+            bump_type="minor"
+            ;;
+          *#patch*)
+            bump_type="patch" 
+            ;;
           *)
             echo "No bump directive found, skipping version bump"
           esac
