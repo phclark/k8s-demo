@@ -80,8 +80,9 @@ jobs:
 
           latest_version=$(git describe --tags --match "${prefix}[0-9]*" --abbrev=4 HEAD) | sed "s/${prefix}//" 
           if [[ "$latest_version" ]];
-          then 
-            echo "No previous version found. Setting initial version to 0.0.0"
+          then
+            latest_version="$initial_version"
+            echo "No previous version found. Setting initial version to $latest_version"
           else
             echo "Latest version: $latest_version"
           fi
@@ -101,10 +102,6 @@ jobs:
             exit(0)
           esac
           
-          if [[ -z "$bump_type" ]];
-          then
-            new_version=$(semver bump $bump_type $latest_version)
-          fi
-          echo "Tagging ${prefix}${new_version}"
+          new_version=$(semver bump $bump_type $latest_version)
+          echo "Performing $bump_type bump to version ${prefix}${new_version}"
           git tag ${prefix}${new_version}
-          
