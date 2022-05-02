@@ -73,6 +73,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           initial_version: 0.0.0
           prefix: ${{ matrix.module }}_v
+          dry_run: false
         run: |
           wget -O /usr/local/bin/semver \
             https://raw.githubusercontent.com/fsaintjacques/semver-tool/master/src/semver
@@ -105,3 +106,10 @@ jobs:
           new_version=$(semver bump $bump_type $latest_version)
           echo "Performing $bump_type bump to version ${prefix}${new_version}"
           git tag ${prefix}${new_version}
+          
+          if [[ "$dry_run" != "true" ]];
+          then 
+            git push
+          else
+            echo "DRY RUN, exiting without push"
+          fi
