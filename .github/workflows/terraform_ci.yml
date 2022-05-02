@@ -98,11 +98,13 @@ jobs:
             ;;
           *)
             echo "No bump directive found, skipping version bump"
+            exit(0)
           esac
           
           if [[ -z "$bump_type" ]];
           then
             new_version=$(semver bump $bump_type $latest_version)
-            echo "Tagging ${prefix}${new_version}"
-            git tag ${prefix}${new_version}
           fi
+          echo "Tagging ${prefix}${new_version}"
+          git tag ${prefix}${new_version}
+          
