@@ -1,0 +1,2 @@
+envAdditionalVars:
+  FRONTEND_VERSION: "1234"
