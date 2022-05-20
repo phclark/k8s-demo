@@ -5,13 +5,15 @@ namespaces:
 
 # predefined services can be enabled and configured easily
 monitoring:
-
+  grafana:
+    enabled: false
+  loki:
+    enabled: false
+  prometheus: 
+    enabled: false
 
 elasticcloud:
   enabled: false
-  nodeSets:
-    default:
-      count: 2
 
 argoevents:
   enabled: false
