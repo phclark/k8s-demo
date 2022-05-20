@@ -18,6 +18,7 @@ spec:
   destinations:
   - server: ${kubernetes_endpoint}
     name: ${environment}
+    namespace: '*'
 
   # Deny all cluster-scoped resources from being created, except for Namespace
   clusterResourceWhitelist:
@@ -32,13 +33,6 @@ spec:
     kind: LimitRange
   - group: ''
     kind: NetworkPolicy
-
-  # Deny all namespaced-scoped resources from being created, except for Deployment and StatefulSet
-  namespaceResourceWhitelist:
-  - group: 'apps'
-    kind: Deployment
-  - group: 'apps'
-    kind: StatefulSet
 
   # Enables namespace orphaned resource monitoring.
   orphanedResources:

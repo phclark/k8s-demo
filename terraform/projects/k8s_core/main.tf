@@ -1,3 +1,14 @@
+terraform {
+  required_version = ">= 0.13"
+
+  required_providers {
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.7.0"
+    }
+  }
+}
+
 provider "aws" {
   region = "us-east-1"
 }
@@ -16,14 +27,11 @@ provider "helm" {
   }
 }
 
-resource "null_resource" "helm_plugin" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
-
-  provisioner "local-exec" {
-    command = "helm plugin install https://github.com/hypnoglow/helm-s3.git"
-  }
+provider "kubectl" {
+  host                   = data.aws_eks_cluster.target.endpoint
+  token                  = data.aws_eks_cluster_auth.aws_iam_authenticator.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.target.certificate_authority.0.data)
+  load_config_file       = false
 }
 
 data "aws_region" "current" {}

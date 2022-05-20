@@ -1,0 +1,15 @@
+affinity: {}
+image:
+  pullPolicy: IfNotPresent
+  repository: 767534018423.dkr.ecr.us-east-1.amazonaws.com/demo-api
+  tag: 0.0.14
+ingress:
+  enabled: true
+  hostname: api-beta1.grainfreewoodworks.com
+nodeSelector: {}
+replicaCount: 1
+resources: {}
+service:
+  port: 80
+  type: ClusterIP
+tolerations: []

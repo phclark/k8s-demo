@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: platform
+  name: platform-${environment}
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: argocd
-    server: ${environment}
+    name: ${environment}
   project: ${environment}
   source:
     repoURL: https://github.com/phclark/k8s-demo.git
