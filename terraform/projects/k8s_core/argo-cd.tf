@@ -23,7 +23,19 @@ resource "helm_release" "argocd" {
   ]
 }
 
+resource "kubernetes_manifest" "dev_project" {
+  manifest = yamldecode(templatefile("${path.root}/project.yaml", {
+    environment         = "dev"
+    kubernetes_endpoint = data.aws_eks_cluster.target.endpoint
+  }))
+}
+
 resource "kubernetes_manifest" "root-app" {
   manifest = yamldecode(templatefile("${path.root}/platform.yaml", {
+    environment = "dev"
   }))
+
+  depends_on = [
+    kubernetes_manifest.dev_project
+  ]
 }
