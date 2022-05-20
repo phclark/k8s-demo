@@ -39,3 +39,12 @@ resource "kubernetes_manifest" "root-app" {
     kubernetes_manifest.dev_project
   ]
 }
+
+resource "kubernetes_manifest" "dev_cluster_secret" {
+  manifest = yamldecode(templatefile("${path.root}/cluster_secret.yaml", {
+    environment         = "dev"
+    kubernetes_endpoint = data.aws_eks_cluster.target.endpoint
+    token               = data.aws_eks_cluster_auth.aws_iam_authenticator.token
+    cert                = base64decode(data.aws_eks_cluster.target.certificate_authority.0.data)
+  }))
+}
