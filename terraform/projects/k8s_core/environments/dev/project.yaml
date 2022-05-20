@@ -17,6 +17,7 @@ spec:
   # Only permit applications to deploy to the guestbook namespace in the same cluster
   destinations:
   - server: ${kubernetes_endpoint}
+    name: ${environment}
 
   # Deny all cluster-scoped resources from being created, except for Namespace
   clusterResourceWhitelist:

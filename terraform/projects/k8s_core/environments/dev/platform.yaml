@@ -8,6 +8,7 @@ metadata:
 spec:
   destination:
     namespace: argocd
+    server: ${environment}
   project: default
   source:
     repoURL: https://github.com/phclark/k8s-demo.git
