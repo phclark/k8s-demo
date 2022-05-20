@@ -22,6 +22,7 @@ argoevents:
 services:
   - chart: demo-api
     namespace: tst-api
+    nameOverride: tst-api
     values:
       replicaCount: 1
       ingress:
@@ -29,7 +30,7 @@ services:
         hostname: api.grainfreewoodworks.com
   - chart: demo-api
     namespace: tst-api
-    nameOverride: demo-api-beta1 
+    nameOverride: tst-demo-api-beta1 
     valueFiles: 
       - ../../environments/tst/values/demo-api-beta1.yaml # relative to charts/demo-api
 
